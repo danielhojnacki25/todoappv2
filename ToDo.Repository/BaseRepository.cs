@@ -11,7 +11,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     public BaseRepository(IDbContextFactory<ApplicationDbContext> dbContextFactory)
         => _dbContextFactory = dbContextFactory;
 
-    public async Task<T?> GetByIdAsync(int id)
+    public async Task<T?> GetByIdAsync(long id)
     {
         await using var context = await _dbContextFactory.CreateDbContextAsync();
         return await context.Set<T>().FindAsync(id);

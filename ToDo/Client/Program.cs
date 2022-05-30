@@ -6,6 +6,7 @@ using ToDo.Client;
 using ToDo.Services.Identities;
 using ToDo.Shared.Handlers;
 using ToDo.Shared.Providers;
+using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -19,6 +20,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddScoped<AuthenticationStateProvider,
     ApiAuthenticationStateProvider>();
+builder.Services.AddMudServices();
 
 builder.Services.AddTransient<CustomAuthorizationHandler>();
 

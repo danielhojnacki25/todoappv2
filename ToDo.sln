@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Server", "ToDo\Server\ToDo.Server.csproj", "{236823D1-CFCB-470A-A1C1-F36769B9F145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Server", "ToDo\Server\ToDo.Server.csproj", "{236823D1-CFCB-470A-A1C1-F36769B9F145}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Client", "ToDo\Client\ToDo.Client.csproj", "{4DD1EC01-3E90-45F3-8962-3F9CEA220CB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Client", "ToDo\Client\ToDo.Client.csproj", "{4DD1EC01-3E90-45F3-8962-3F9CEA220CB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Shared", "ToDo\Shared\ToDo.Shared.csproj", "{2FD2B35A-48CE-4748-A38D-4503D15C9108}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Shared", "ToDo\Shared\ToDo.Shared.csproj", "{2FD2B35A-48CE-4748-A38D-4503D15C9108}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Data", "ToDo.Data\ToDo.Data.csproj", "{5536A5FF-D83D-47E3-818C-EE2FE139D089}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Data", "ToDo.Data\ToDo.Data.csproj", "{5536A5FF-D83D-47E3-818C-EE2FE139D089}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Mappers", "ToDo.Mappers\ToDo.Mappers.csproj", "{741009AB-1837-40F7-93CB-07E807AED316}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Mappers", "ToDo.Mappers\ToDo.Mappers.csproj", "{741009AB-1837-40F7-93CB-07E807AED316}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Repository", "ToDo.Repository\ToDo.Repository.csproj", "{B5E2C970-1E1B-4078-8552-DBCDD3AAB6D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Repository", "ToDo.Repository\ToDo.Repository.csproj", "{B5E2C970-1E1B-4078-8552-DBCDD3AAB6D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Services", "ToDo.Services\ToDo.Services.csproj", "{3BF4AEF4-DC51-4E39-A520-C0FD9B4A2B20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Services", "ToDo.Services\ToDo.Services.csproj", "{3BF4AEF4-DC51-4E39-A520-C0FD9B4A2B20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Common", "ToDo.Common\ToDo.Common.csproj", "{928F6083-4EE0-432E-A3F9-C1661F8C2C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Common", "ToDo.Common\ToDo.Common.csproj", "{928F6083-4EE0-432E-A3F9-C1661F8C2C9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

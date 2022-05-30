@@ -1,9 +1,19 @@
-﻿@page "/"
+﻿
+@using ToDo.Data.Models;
 
-<PageTitle>Index</PageTitle>
+<PageTitle>List ToDo</PageTitle>
 
-<h1>Hello, world!</h1>
+<MudPaper Height="800px" Width="100%">
+    <MudText Typo="Typo.h4">Tik Tak Toe</MudText>
+    <MudContainer MaxWidth="MaxWidth.Small">
+        <MudPaper Height="600px" Width="700px" Square="true" Style="background-color:#90CAF9">
 
-Welcome to your new app.
+           
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+        </MudPaper>
+    </MudContainer>
+</MudPaper>
+
+@code {
+   
+}

@@ -1,0 +1,40 @@
+﻿@layout MainLayout
+@inject IDialogService DialogService
+@using Microsoft.AspNetCore.Components
+
+<MudContainer Elevation="0" Style="background-color: #E8EAF6; min-height: 40vh; display: flex; flex-direction: column;">
+    <MudDialog>
+ <DialogActions>
+     <MudExpansionPanels>
+    <MudExpansionPanel Text="Panel One" MaxHeight="150">
+        Panel One Content
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Panel Two" MaxHeight="500">
+        Panel Two Content
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Panel Three" MaxHeight="1000">
+        Panel Three Content
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Panel Four">
+        Panel Four Content
+    </MudExpansionPanel>
+</MudExpansionPanels>
+		 <MudGrid Justify="Justify.Center" Style="margin-top: 10px;">
+            <MudItem md="6">
+                <MudButton OnClick="Submit" ButtonType="ButtonType.Submit" Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" StartIcon="@Icons.Filled.Close" Class="ml-auto mb-2">Zamknij</MudButton>
+            </MudItem>
+  
+        </MudGrid>
+    </DialogActions>
+  </MudDialog>
+    
+</MudContainer>
+
+@code {
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    async Task Submit()
+	{
+		MudDialog.Close(DialogResult.Ok(true));
+	}
+}

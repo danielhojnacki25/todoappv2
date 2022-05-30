@@ -1,0 +1,116 @@
+﻿@layout MainLayout
+@inject IDialogService DialogService
+@using Microsoft.AspNetCore.Components
+@using ToDo.Data.Models
+
+
+<MudContainer Elevation="0" Style="background-color: #E8EAF6; min-height: 40vh; display: flex; flex-direction: column;">
+	<MudDialog>
+		<DialogContent>
+		
+			<MudGrid>
+            <MudItem md="6">
+                <MudTextField T=AppTask Typo="Typo.h4" Label="Title"></MudTextField>
+            </MudItem>
+			<MudItem md="6">
+				<MudTextField T=AppTask Typo="Typo.h4" Label="User"></MudTextField>
+			</MudItem>
+			<MudItem md="12">
+				<MudTextField T=AppTask Variant="Variant.Outlined" Label="Description"/>
+			</MudItem>
+			<MudItem md="6">
+				<MudTextField T=AppTask Typo="Typo.h4" Label="Priority"></MudTextField>
+			</MudItem>
+			<MudItem md="6">
+                    <MudSelect OnOpen="RefreshStatusList" OpenIcon="@Icons.Filled.Attractions" Label="Status" @bind-Value="@_currentSetStatus">
+                        @if (availableStatus.Count > 0)
+                        {
+                            @foreach (AppTask stat in availableStatus)
+                            {
+                                <MudSelectItem Value="stat">@stat.Status</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+ 			</MudItem>
+			<MudItem md="6">
+				<MudTextField T="DateTime?" Format="yyyy-MM-dd" Label="Creation Date"  InputType="InputType.Date"/>
+			</MudItem>
+			<MudItem  md="6"> 
+				<MudTextField T="DateTime?" Format="yyyy-MM-dd" Label="Deadline Date"  InputType="InputType.Date"/>
+			</MudItem>
+			<MudItem  md="6">
+				<MudTextField T="DateTime?" Format="yyyy-MM-dd" Label=" End Date"  InputType="InputType.Date"/>
+			</MudItem>
+			<MudItem  md="6">
+				<MudTextField T="string" Label="Time" InputType="InputType.Time"/>
+			</MudItem>
+			
+           
+        </MudGrid>
+		
+		</DialogContent>
+		
+		 <DialogActions>
+
+		 <MudGrid Justify="Justify.Center" Style="margin-top: 10px;">
+            <MudItem md="3">
+                <MudButton OnClick="Submit" ButtonType="ButtonType.Submit" Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" StartIcon="@Icons.Filled.Close" Class="ml-auto mb-2">Zamknij</MudButton>
+            </MudItem>
+            <MudItem md="3">
+                <MudButton ButtonType="ButtonType.Reset" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" StartIcon="@Icons.Filled.ClearAll" Class="ml-auto mb-2">Zresetuj</MudButton>
+            </MudItem>
+            <MudItem md="3">
+                <MudButton OnClick="ValidSubmit" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" StartIcon="@Icons.Filled.AddTask" Class="ml-auto mb-2">Dodaj</MudButton>
+            </MudItem>
+        </MudGrid>
+    </DialogActions>
+	</MudDialog>
+
+</MudContainer>
+
+@code {
+	private AppTask ToDoAdd { get; set; }
+	private List<AppTask> availableStatus { get; set; } = new List<AppTask>();
+	private AppTask _currentSetStatus;
+	private bool IsFormSuccesfullyValidated { get; set; }
+
+	[CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+	void Close() => MudDialog.Close(DialogResult.Ok(true));
+
+	private async Task RefreshStatusList()
+	{
+
+	}
+
+	async Task Submit()
+	{
+		MudDialog.Close(DialogResult.Ok(true));
+	}
+
+	protected override void OnInitialized()
+	{
+		this.ToDoAdd = new AppTask();
+	}
+
+	private async Task DefaultParameter()
+	{
+	//ToDoAdd.Title = "Auto-czarna strzała";
+		//      ToDoAdd.Description = "Zawieść auto do mechanika. Nabić klimę. Wymiana olei.";
+		//      ToDoAdd.TargetUser = "Mama";
+
+		//      ToDoAdd.CreationDate = "22.05.2022";
+		//      ToDoAdd.DeadlineDate = "30.05.2022";
+		//      ToDoAdd.EndDate = "06.06.2022";
+
+		//      ToDoAdd.Priority = "NOW";
+		//      ToDoAdd.Status = "done";
+
+		StateHasChanged();
+	}
+
+	private async void ValidSubmit()
+	{
+		
+	}
+}

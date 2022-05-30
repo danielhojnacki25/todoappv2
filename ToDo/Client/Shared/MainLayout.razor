@@ -1,17 +1,51 @@
-﻿@inherits LayoutComponentBase
+﻿@using ToDo.Shared.Enums
+@using ToDo.Shared.Extensions.NavigateManagerExtensions
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+
+<MudLayout >
+    <MudAppBar Elevation="1" Style="background-color:#0091EA" Dense="@dense">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="background-color:#0091EA" Edge="Edge.Start" OnClick="@ToggleDrawer"  />
+       Lista ToDo
+       <MudSpacer />
+       <MudIconButton Icon="@Icons.Material.Outlined.PeopleAlt"/>
+    </MudAppBar>
+    <MudDrawer @bind-Open="@openView" ClipMode="clipMode" Elevation="1" Variant="@DrawerVariant.Responsive">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">Menu</MudText>
+        </MudDrawerHeader>
+     <MudNavMenu>
+            <MudNavLink Match="NavLinkMatch.All" OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksMom)">Mama</MudNavLink>
+            <MudNavLink OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksDad)" Match="NavLinkMatch.Prefix">Tata</MudNavLink>
+            <MudNavGroup Title="Dzieci"   Expanded="true">
+                <MudNavLink OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksKidOne)"  Match="NavLinkMatch.Prefix">Dziecko 1</MudNavLink>
+                <MudNavLink OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksKidTwo)"  Match="NavLinkMatch.Prefix">Dziecko 2</MudNavLink>
+            </MudNavGroup>
+            <MudNavLink OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksDog)" Match="NavLinkMatch.Prefix">Ciapek</MudNavLink>   
+            
+    </MudNavMenu>
+    <MudSwitch @bind-Checked="@dense" Label="Nose appbar" Color="Color.Primary" Style="margin-top: 350px; margin-left: 10px;"/>
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool openView = false;
+    bool dense = false;
+    DrawerClipMode clipMode = DrawerClipMode.Always; 
+
+   
+
+     void ToggleDrawer()
+    {
+        openView = !openView;
+    }
+}
