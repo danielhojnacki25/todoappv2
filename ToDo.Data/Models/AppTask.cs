@@ -12,20 +12,29 @@ public class AppTask : Entity
     public DateTime DeadlineDate { get; private set; }
     public DateTime EndDate { get; private set; }
     public Priority Priority { get; private set; }
-    public User TargetUser { get; private set; }
-    public User SourceUser { get; private set; }
+    public long? ProjectId { get; private set; }
+    public Project Project { get; set; }
+
+    public string? TargetUserId { get; set; }
+    public virtual User TargetUser { get; set; }
+    public string? SourceUserId { get; set; }
+    public virtual User SourceUser { get; set; }
 
     public AppTask(){}
 
-    public AppTask(string title, string description, User targetUser, User sourceUser, Status status, Priority priority)
+    public AppTask(string title, string description, string targetUser, string sourceUser, Priority priority, DateTime deadlineDateTime)
     {
         Title = title;
         Description = description;
-        TargetUser = targetUser;
-        SourceUser = sourceUser;
-        Status = status;
+        TargetUserId = targetUser;
+        SourceUserId = sourceUser;
+        Status = Status.Active;
         Priority = priority;
         CreationDate = DateTime.Now;
         EndDate = DateTime.MinValue;
+        DeadlineDate = deadlineDateTime;
     }
+
+    public void SetProject(long projectId)
+        => ProjectId = projectId;
 }

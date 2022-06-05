@@ -178,6 +178,9 @@ namespace ToDo.Data.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
+                    b.Property<long?>("ProjectId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("SourceUserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -192,11 +195,40 @@ namespace ToDo.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProjectId");
+
                     b.HasIndex("SourceUserId");
 
                     b.HasIndex("TargetUserId");
 
                     b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("ToDo.Data.Models.Project", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("ToDo.Data.Models.User", b =>
@@ -317,6 +349,10 @@ namespace ToDo.Data.Migrations
 
             modelBuilder.Entity("ToDo.Data.Models.AppTask", b =>
                 {
+                    b.HasOne("ToDo.Data.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
                     b.HasOne("ToDo.Data.Models.User", "SourceUser")
                         .WithMany()
                         .HasForeignKey("SourceUserId");
@@ -325,9 +361,22 @@ namespace ToDo.Data.Migrations
                         .WithMany()
                         .HasForeignKey("TargetUserId");
 
+                    b.Navigation("Project");
+
                     b.Navigation("SourceUser");
 
                     b.Navigation("TargetUser");
+                });
+
+            modelBuilder.Entity("ToDo.Data.Models.Project", b =>
+                {
+                    b.HasOne("ToDo.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

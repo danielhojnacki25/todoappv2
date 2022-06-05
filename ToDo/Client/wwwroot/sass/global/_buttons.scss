@@ -1,0 +1,132 @@
+﻿@import "../sass-utils/_variables";
+@import "../sass-utils/_mixins";
+
+.cta-box {
+    @include flexbox;
+    @include align-items(center);
+    @include justify-content(center);
+
+    .cta-box__cta-btn {
+        text-decoration: none;
+        box-sizing: border-box;
+        padding: 14px 45px;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 400;
+        border-radius: 5px;
+        letter-spacing: normal;
+        @include transition-property(opacity, background-color, color, border);
+        @include transition-duration(.2s);
+        @include transition-timing-function(ease);
+        text-align: center;
+        position: relative;
+        width: 100%;
+        @include flexbox;
+        @include align-items(center);
+        @include justify-content(center);
+
+        &--primary {
+            background-color: $primary-color;
+            border: 1px solid $primary-color;
+            color: #ffffff;
+
+            &:hover, &:focus {
+                background-color: $primary-color--hover;
+                border: 1px solid $primary-color--hover;
+            }
+
+            &.submit-btn {
+                &::after {
+                    background-color: $primary-color--alpha-06;
+                }
+            }
+        }
+
+        &--secondary {
+            background-color: #ffffff;
+            border: 1px solid $flat-grey--alpha-05;
+            color: $font-primary-color;
+
+            &:hover, &:focus {
+                border: 1px solid $flat-grey--alpha-08;
+            }
+
+            &.submit-btn {
+                &::after {
+                    background-color: $flat-grey--alpha-02;
+                }
+            }
+        }
+
+        &--primary-no-bckg {
+            background-color: #ffffff;
+            border: 1px solid $primary-color;
+            color: $primary-color;
+
+            &:hover, &:focus {
+                background-color: #ffffff;
+                border: 1px solid $primary-color--hover;
+            }
+        }
+
+        &--external-provider {
+            background-color: #ffffff;
+            border: 1px solid #ffffff;
+            color: $font-primary-color;
+
+            &:hover, &:focus {
+                border: 1px solid #ffffff;
+            }
+
+            .provider-brand-box {
+                margin-right: 8px;
+
+                .provider-logo {
+                    width: 20px;
+                    display: block;
+                }
+            }
+
+            .provider-name {
+                font-size: 13px;
+                color: $font-primary-color;
+                display: block;
+                font-weight: 400;
+            }
+
+            &.submit-btn {
+                &::after {
+                    background-color: $flat-grey--alpha-02;
+                }
+            }
+        }
+
+        &.submit-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 999;
+            @include flexbox;
+            @include align-items(center);
+            @include justify-content(center);
+
+            &::after {
+                content: '';
+                position: absolute;
+                padding: 100%;
+                opacity: 0;
+                @include transition-property(all);
+                @include transition-duration(.8s);
+                @include transition-timing-function(ease);
+                z-index: -1;
+                border-radius: 50%;
+            }
+
+            &:active:after {
+                padding: 0;
+                margin: 0;
+                opacity: 1;
+                transition: 0s;
+            }
+        }
+    }
+}

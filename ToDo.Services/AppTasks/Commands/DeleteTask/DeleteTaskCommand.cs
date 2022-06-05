@@ -5,8 +5,8 @@ namespace ToDo.Services.AppTasks.Commands.DeleteTask;
 
 public class DeleteTaskCommand : IRequest<Unit>
 {
-    public DeleteTaskCommand(AppTaskDto appTaskDto)
-        => AppTaskDto = appTaskDto;
+    public DeleteTaskCommand(long id)
+        => Id = id;
 
-    public AppTaskDto AppTaskDto { get; set; }
+    public long Id { get; set; }
 }

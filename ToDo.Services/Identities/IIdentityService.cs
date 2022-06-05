@@ -7,4 +7,5 @@ public interface IIdentityService
 {
     Task<RegisterResult?> RegisterAsync(RegisterViewModel model);
     Task<LoginResult?> LoginAsync(LoginViewModel model);
+    Task LogoutAsync();
 }

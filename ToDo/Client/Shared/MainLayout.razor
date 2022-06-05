@@ -1,51 +1,126 @@
 ﻿@using ToDo.Shared.Enums
 @using ToDo.Shared.Extensions.NavigateManagerExtensions
+@using Microsoft.AspNetCore.Components.Authorization
+@using ToDo.Client.Components
+@using ToDo.Common.Dtos.Users
+@using ToDo.Services.Identities
+@using ToDo.Services.Users
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider _authenticationStateProvider
+@inject IUserService _userService
+@inject HttpClient _httpClient
+@inject NavigationManager _navigationManager
+@inject IIdentityService _identityService
+<CascadingValue Value="this">
+    @if (UserDto is { IsAuthenticated: true })
+    {
+        <SuccessAlert @ref="_successAlert"></SuccessAlert>
+        <ErrorAlert @ref="_errorAlert"></ErrorAlert>
 
+        <nav class="user-top-nav">
+            <div class="user-top-nav__top-nav-content">
+                <div class="top-nav-content__container">
+                    <div class="top-nav-content__container-wrapper top-nav-content__container-wrapper--left">
+                        <div class="container-wrapper__menu-content left-menu-content">
+                            <!---->
+                        <div class="left-menu-content__toggle-left-bar-box">
+                                <div class="toggle-left-bar-box__click-wrapper">
+                                    <span class="">Menu</span>
+                                </div>
+                            </div>
+                            <!---->
+                        <div class="left-menu-content__back-to-home-box">
+                                <a class="back-to-home-box__link-wrapper" href="/">
+                                    <span class="">Home</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-nav-content__container-wrapper top-nav-content__container-wrapper--right">
+                        <div class="container-wrapper__menu-content right-menu-content">
+                            <a class="logout top-more-option top-more-option--signout" @onclick="Logout">
+                                <span class="option-tag">Sign out</span>
+                            </a>
+                            <!---->
+                            <div class="right-menu-content__username-box">
+                                <div class="username-box__user-photo">
+                                    <img class="user-photo__img" src=""/>
+                                </div>
+                                <span class="username-box__username">@UserDto.Email</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
-<MudThemeProvider/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
+        <main class="todoapp-main-section">
+            <div class="todoapp-main-section__navmenu-container">
+                <NavMenu />
+            </div>
+            <div class="todoapp-main-section__todoapp-content">
+                <CascadingValue Value="UserDto">
+                    @Body
+                </CascadingValue>
+            </div>
+        </main>
+    }
 
-
-<MudLayout >
-    <MudAppBar Elevation="1" Style="background-color:#0091EA" Dense="@dense">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="background-color:#0091EA" Edge="Edge.Start" OnClick="@ToggleDrawer"  />
-       Lista ToDo
-       <MudSpacer />
-       <MudIconButton Icon="@Icons.Material.Outlined.PeopleAlt"/>
-    </MudAppBar>
-    <MudDrawer @bind-Open="@openView" ClipMode="clipMode" Elevation="1" Variant="@DrawerVariant.Responsive">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6">Menu</MudText>
-        </MudDrawerHeader>
-     <MudNavMenu>
-            <MudNavLink Match="NavLinkMatch.All" OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksMom)">Mama</MudNavLink>
-            <MudNavLink OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksDad)" Match="NavLinkMatch.Prefix">Tata</MudNavLink>
-            <MudNavGroup Title="Dzieci"   Expanded="true">
-                <MudNavLink OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksKidOne)"  Match="NavLinkMatch.Prefix">Dziecko 1</MudNavLink>
-                <MudNavLink OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksKidTwo)"  Match="NavLinkMatch.Prefix">Dziecko 2</MudNavLink>
-            </MudNavGroup>
-            <MudNavLink OnClick="() => NavigationManager.NavigateTo(NavigationManagerPaths.TasksDog)" Match="NavLinkMatch.Prefix">Ciapek</MudNavLink>   
-            
-    </MudNavMenu>
-    <MudSwitch @bind-Checked="@dense" Label="Nose appbar" Color="Color.Primary" Style="margin-top: 350px; margin-left: 10px;"/>
-    </MudDrawer>
-    <MudMainContent>
-        @Body
-    </MudMainContent>
-</MudLayout>
+</CascadingValue>
 
 @code {
     bool openView = false;
     bool dense = false;
-    DrawerClipMode clipMode = DrawerClipMode.Always; 
+    DrawerClipMode clipMode = DrawerClipMode.Always;
 
-   
+    private UserDto? UserDto { get; set; } = new();
+    private bool _initialized;
+    public string AccessToken { get; set; } = string.Empty;
 
-     void ToggleDrawer()
+    private SuccessAlert? _successAlert;
+    private ErrorAlert? _errorAlert;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        var authStateUser = authState.User;
+
+        if (authStateUser.Identity is { IsAuthenticated: true })
+        {
+            if (authStateUser.Identity.Name is not null)
+            {
+                UserDto = await _userService.GetUserByUsernameAsync(authStateUser.Identity.Name);
+            }
+
+            if (UserDto != null)
+                UserDto.IsAuthenticated = true;
+        }
+        else
+        {
+            _navigationManager.NavigateTo("/user/login");
+        }
+
+
+        _initialized = true;
+    }
+
+    void ToggleDrawer()
     {
         openView = !openView;
+    }
+
+    public async Task ShowSuccessAlert(string message)
+    {
+        _successAlert?.Show(message);
+        
+        await Task.Delay(5000);
+        _successAlert?.Close();
+    }
+
+    private async Task Logout()
+    {
+        await _identityService.LogoutAsync();
+        _navigationManager.NavigateTo("/", true);
     }
 }

@@ -1,0 +1,37 @@
+﻿@using Index = ToDo.Client.Pages.Index
+
+<CascadingValue Value="this">
+    <CascadingValue Value="MainLayout">
+        
+        @if (_success)
+        {
+            <div class="notification-container notification-container--success">
+                <p class="message-value">@_message</p>
+            </div>
+        }
+    </CascadingValue>
+</CascadingValue>
+
+@code {
+    [CascadingParameter]
+    private MainLayout? MainLayout { get; set; }
+    [CascadingParameter]
+    private Index _indexPage { get; set; }
+
+    public string _message { get; set; }
+
+    private bool _success;
+
+    public void Show(string message)
+    {
+        _message = message;
+        _success = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        _success = false;
+        StateHasChanged();
+    }
+}

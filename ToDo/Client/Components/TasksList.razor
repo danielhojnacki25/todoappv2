@@ -1,0 +1,170 @@
+﻿@using ToDo.Common.Dtos.AppTasks
+@using ToDo.Common.Dtos.Users
+@using ToDo.Services.AppTasks
+@using Index = ToDo.Client.Pages.Index
+@inject IAppTaskService _appTaskService
+
+<CascadingValue Value="this">
+    <CascadingValue Value="MainLayout">
+        <CascadingValue Value="Index">
+
+            @if (_initialized)
+            {
+                @if (TaskList.Any())
+                {
+                    <div class="home-wrapper__today-tasks-container">
+                        @foreach (var t in TaskList)
+                        {
+                            <div class="home-wrapper__task-container" id="task-@t.Id">
+
+                                @code {
+        DateTime todayDate = DateTime.Now.Date;
+                    }
+
+                    <div class="task-container__content">
+                        <div class="task-container__data-box task-container__data-box--left">
+                            <div class="data-box__wrapper">
+                                <div class="data-box__task-title">
+                                    <h4 class="task-title__value">@t.Title</h4>
+                                </div>
+                                <div class="data-box__task-short-description">
+                                    <p class="task-short-description__value">@t.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="task-container__data-box task-container__data-box--right">
+                            <div class="data-box__wrapper">
+                                <div class="data-box__task-created-date">
+                                    <span class="task-created-date__value">@t.CreationDate.ToShortDateString() @t.CreationDate.ToShortTimeString()</span>
+                                </div>
+                                <div class="data-box__deadline-time">
+
+                                    @if (t.DeadlineDate.Date == DateTime.Now.Date)
+                                    {
+                                        <span class="deadline-time__value">Today</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="deadline-time__value">@t.DeadlineDate.ToShortDateString()</span>
+                                    }
+
+                                </div>
+                                <div class="options-content__area">
+                                    <a class="toggled-menu__option option delete-task-option" @onclick="(() => DeleteTaskAsync(t.Id))">Delete Task</a>
+                                </div>
+                                        </div>
+                                        <div class="data-box__single-rolled-menu-wrapper js-single-rolled-menu-wrapper">
+                                            <div class="single-rolled-menu-wrapper__box js-toggle-single-task-menu">
+                                                <svg version="1.1" class="single-task-menu" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
+                                                <path d="M328,256c0,39.8-32.2,72-72,72s-72-32.2-72-72s32.2-72,72-72S328,216.2,328,256z M432,184c-39.8,0-72,32.2-72,72
+	                                        s32.2,72,72,72s72-32.2,72-72S471.8,184,432,184z M80,184c-39.8,0-72,32.2-72,72s32.2,72,72,72s72-32.2,72-72S119.8,184,80,184z" /></svg>
+                                            </div>
+                                            <div class="single-rolled-menu-wrapper__toggled-menu js-single-task-menu">
+                                                <div class="toggled-menu__options-content">
+                                                    <div class="options-content__area">
+                                                        <a class="toggled-menu__option option edit-task-option" href="/task/@t.Id/edit">Edit Task</a>
+                                                        @*                                            @if (t.AppProject != null)
+                                                            {
+                                                            <a class="toggled-menu__option option go-to-project-option" href="/projects/@t.AppProject?.Id/tasks">Go to Project</a>
+                                                            }*@
+                                                        <a class="toggled-menu__option option go-to-project-option">Details</a>
+                                                    </div>
+                                                    <div class="options-content__area">
+                                                        @*        <a class="toggled-menu__option option delete-task-option" @onclick="(() => DeleteTask(t.Id))">Delete Task</a>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="data-box__task-details-wrapper">
+                                    <div class="task-details-wrapper__priority-box task-details">
+                                        <span class="priority-box__point"></span>
+                                        <span class="task-details__value">@(t.Priority != null ? t.Priority : "Low")</span>
+                                    </div>
+                                    <div class="task-details-wrapper__project-box task-details">
+                                        <span class="project-box__point"></span>
+                                        @if (t.ProjectDto != null)
+                                        {
+                                            <span class="task-details__value">Project: @t.ProjectDto.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="task-details__value">Project: Unset</span>
+                                        }
+
+                                    </div>
+                                    <div class="task-details-wrapper__user-box task-details">
+                                        <span class="user-box__point"></span>
+                                        <span class="task-details__value">@t.SourceUser.Email</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                @if (!TaskList.Any())
+                {
+                    <div class="user-global__empty-list-container">
+                        <p class="empty-list-container__text">You currently have no tasks.</p>
+                    </div>
+                }
+                <div class="user-global__fast-create-container">
+                    <div class="fast-create-container__image-box">
+                        <picture>
+                            <img class="fast-create-container__image" src="img/index-photo-1.jpg" />
+                        </picture>
+                    </div>
+                    <div class="fast-create-container__button-wrapper">
+                        <div class="button-wrapper__cta-box cta-box">
+                            <button class="cta-box__cta-btn cta-box__cta-btn--primary" @onclick="(ShowCreateTaskModal)">Create Task</button>
+                        </div>
+                    </div>
+                </div>
+
+                <CreateTaskModal @ref="_createTaskModal" UserDto="UserDto"></CreateTaskModal>
+            }
+
+        </CascadingValue>
+    </CascadingValue>
+</CascadingValue>
+
+@code {
+    private CreateTaskModal _createTaskModal;
+    public IList<AppTaskDto> TaskList { get; set; }
+
+    [CascadingParameter]
+    public MainLayout? MainLayout { get; set; }
+    [CascadingParameter]
+    public Index Index { get; set; }
+    [Parameter]
+    public UserDto UserDto { get; set; }
+
+    private bool _initialized;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetTasksAsync();
+        _initialized = true;
+    }
+
+    public async Task GetTasksAsync()
+    {
+        TaskList = await _appTaskService.GetTasksByUserIdAsync(UserDto.Id);
+        StateHasChanged();
+    }
+
+    private void ShowCreateTaskModal()
+    {
+        _createTaskModal?.Show();
+    }
+
+    private async Task DeleteTaskAsync(long id)
+    {
+        await _appTaskService.DeleteTaskAsync(id);
+        await GetTasksAsync();
+        StateHasChanged();
+        MainLayout?.ShowSuccessAlert("The task has been deleted successfully");
+    }
+}

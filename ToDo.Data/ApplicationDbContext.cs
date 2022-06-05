@@ -17,4 +17,5 @@ public class ApplicationDbContext : IdentityDbContext<User>
     }
 
     public DbSet<AppTask> Tasks => Set<AppTask>();
+    public DbSet<Project> Projects => Set<Project>();
 }

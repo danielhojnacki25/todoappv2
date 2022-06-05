@@ -1,0 +1,539 @@
+﻿@import "../sass-utils/_variables";
+@import "../sass-utils/_mixins";
+
+.home-user-content-container {
+    width: 100%;
+
+    .home-user-content-container__home-wrapper {
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+
+        .home-wrapper__header {
+            margin-top: 2.5em;
+
+            .header__today-date-box {
+                .header__title {
+                    text-align: left;
+
+                    .date-details {
+                        font-size: .85rem;
+                        //color: $todolist-blue-3-rgba;
+                    }
+                }
+            }
+
+            .header__page-desc {
+                margin-top: 10px;
+
+                .text {
+                    // color: $todolist-grey-2-rgba;
+                }
+            }
+        }
+
+        .home-wrapper__today-tasks-container {
+            width: 100%;
+            margin-top: 2em;
+
+            .home-wrapper__task-container {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 1.4em 1.1em;
+                margin: 10px 0;
+                background-color: #ffffff;
+                border-bottom: 1px solid rgba(204,210,222, .5);
+
+                .task-container__content {
+                    width: inherit;
+                    display: flex;
+
+                    .task-container__data-box {
+                        display: flex;
+                        align-items: center;
+
+                        &--left {
+                            width: 50%;
+                            margin-right: .5em;
+
+                            .data-box__wrapper {
+                                width: 100%;
+
+                                .data-box__task-title {
+                                    .task-title__value {
+                                        font-weight: 500;
+                                        //color: $todolist-black-2-rgba;
+                                        font-size: 1rem;
+                                    }
+                                }
+
+                                .data-box__task-short-description {
+                                    margin-top: 1px;
+
+                                    .task-short-description__value {
+                                        font-size: .8rem;
+                                        //color: $todolist-grey-2-rgba;
+                                    }
+                                }
+                            }
+                        }
+
+                        &--right {
+                            width: 50%;
+                            margin-left: .5em;
+                            justify-content: flex-end;
+                            padding-right: 3em;
+                            position: relative;
+
+                            .data-box__wrapper {
+
+                                .data-box__task-created-date {
+                                    .task-created-date__value {
+                                        text-align: right;
+                                        font-size: .9rem;
+                                        // color: $todolist-black-2-rgba;
+                                        display: block;
+                                        font-weight: 500;
+                                    }
+                                }
+
+                                .data-box__deadline-time {
+                                    .deadline-time__value {
+                                        font-size: .8rem;
+                                        // color: $todolist-blue-3-rgba;
+                                        text-align: right;
+                                    }
+                                }
+
+                                .options-content__area {
+                                    margin-top: 20px;
+                                    .toggled-menu__option{
+                                        font-size: 14px;
+                                        color: red;
+                                        text-align: right;
+                                        cursor: pointer;
+                                        &:hover{
+                                            text-decoration: underline;
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            .data-box__single-rolled-menu-wrapper {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                display: block;
+                                visibility: hidden;
+                                opacity: 0;
+                                transition-property: visibility, opacity;
+                                transition-duration: .3s;
+                                transition-timing-function: ease;
+
+                                .single-rolled-menu-wrapper__box {
+                                    width: 2em;
+                                    height: 2em;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    cursor: pointer;
+
+                                    .single-task-menu {
+                                        width: 15.5px;
+                                        //fill: $todolist-grey-2-rgba;
+                                        transition-duration: .3s;
+                                        transition-property: fill;
+                                        transition-timing-function: ease;
+                                    }
+
+                                    &:hover .single-task-menu {
+                                        // fill: $todolist-blue-3-rgba;
+                                        transition-duration: .3s;
+                                        transition-property: fill;
+                                        transition-timing-function: ease;
+                                    }
+                                }
+
+                                .single-rolled-menu-wrapper__toggled-menu {
+                                    width: 14em;
+                                    background-color: #ffffff;
+                                    border-radius: 10px;
+                                    position: absolute;
+                                    top: 0;
+                                    left: 2.5em;
+                                    -webkit-box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+                                    -moz-box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+                                    box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+                                    display: none;
+                                    padding: .5em .5em;
+
+                                    .toggled-menu__options-content {
+                                        width: 100%;
+                                        height: 100%;
+                                        display: block;
+
+                                        .options-content__area {
+                                            width: 100%;
+                                            border-top: 1px solid rgba(204,210,222, .3);
+                                            padding: 5px 0;
+
+                                            .toggled-menu__option {
+                                                padding: 8px 20px;
+                                                font-size: .85rem;
+                                                //   color: $todolist-black-3-rgba;
+                                                font-weight: 400;
+                                                cursor: pointer;
+                                                border-radius: 5px;
+                                                transition-property: color, background-color;
+                                                transition-timing-function: ease;
+                                                transition-duration: .3s;
+                                                text-decoration: none;
+
+                                                &:hover, &:focus {
+                                                    background-color: rgba(235,242,255, .5);
+                                                    //   color: $todolist-blue-3-rgba;
+                                                    transition-property: color, background-color;
+                                                    transition-timing-function: ease;
+                                                    transition-duration: .3s;
+                                                }
+                                            }
+
+                                            &:nth-child(1) {
+                                                border-top: none;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .single-rolled-menu-wrapper__toggled-menu.is-active {
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .data-box__task-details-wrapper {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    margin-top: 10px;
+
+                    .task-details {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        margin-right: 15px;
+
+                        .task-details__value {
+                            font-size: .8rem;
+                            //   color: $todolist-grey-2-rgba;
+                            margin-left: 5px;
+                            display: block;
+                        }
+                    }
+
+                    .task-details-wrapper__priority-box {
+                        .priority-box__point {
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 100%;
+                            background-color: #ff5252;
+                            display: block;
+                        }
+                    }
+
+                    .task-details-wrapper__project-box {
+                        .project-box__point {
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 100%;
+                            background-color: $primary-color;
+                            display: block;
+                        }
+                    }
+
+                    .task-details-wrapper__user-box {
+                        .user-box__point {
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 100%;
+                            background-color: #05c46b;
+                            display: block;
+                        }
+                    }
+                }
+
+                &:hover .data-box__single-rolled-menu-wrapper {
+                    visibility: visible !important;
+                    opacity: 1 !important;
+                    transition-property: visibility, opacity;
+                    transition-duration: .3s;
+                    transition-timing-function: ease;
+                }
+            }
+        }
+    }
+}
+
+.user-global__fast-create-container {
+    width: 100%;
+    margin-top: 1em;
+
+    .fast-create-container__image-box {
+        picture {
+            .fast-create-container__image {
+                width: 25em;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    .fast-create-container__button-wrapper {
+        margin-top: 1em;
+        @include flexbox;
+        @include justify-content(center);
+    }
+}
+
+.user-global__empty-list-container {
+    width: 100%;
+    margin-top: 2em;
+
+    .empty-list-container__text {
+        text-align: center;
+        //color: $todolist-grey-2-rgba;
+        font-weight: 500;
+    }
+}
+
+.home-wrapper__today-tasks-container {
+    width: 100%;
+    margin-top: 2em;
+
+    .home-wrapper__task-container {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1.4em 1.1em;
+        margin: 10px 0;
+        background-color: #ffffff;
+        border-bottom: 1px solid rgba(204,210,222, .5);
+
+        .task-container__content {
+            width: inherit;
+            display: flex;
+
+            .task-container__data-box {
+                display: flex;
+                align-items: center;
+
+                &--left {
+                    width: 50%;
+                    margin-right: .5em;
+
+                    .data-box__wrapper {
+                        width: 100%;
+
+                        .data-box__task-title {
+                            .task-title__value {
+                                font-weight: 500;
+                              //  color: $todolist-black-2-rgba;
+                                font-size: 1rem;
+                            }
+                        }
+
+                        .data-box__task-short-description {
+                            margin-top: 1px;
+
+                            .task-short-description__value {
+                                font-size: .8rem;
+                              //  color: $todolist-grey-2-rgba;
+                            }
+                        }
+                    }
+                }
+
+                &--right {
+                    width: 50%;
+                    margin-left: .5em;
+                    justify-content: flex-end;
+                    padding-right: 3em;
+                    position: relative;
+
+                    .data-box__wrapper {
+
+                        .data-box__task-created-date {
+                            .task-created-date__value {
+                                text-align: right;
+                                font-size: .9rem;
+                              //  color: $todolist-black-2-rgba;
+                                display: block;
+                                font-weight: 500;
+                            }
+                        }
+
+                        .data-box__deadline-time {
+                            .deadline-time__value {
+                                font-size: .8rem;
+                             //   color: $todolist-blue-3-rgba;
+                                text-align: right;
+                            }
+                        }
+                    }
+
+                    .data-box__single-rolled-menu-wrapper {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        display: block;
+                        visibility: hidden;
+                        opacity: 0;
+                        transition-property: visibility, opacity;
+                        transition-duration: .3s;
+                        transition-timing-function: ease;
+
+                        .single-rolled-menu-wrapper__box {
+                            width: 2em;
+                            height: 2em;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+
+                            .single-task-menu {
+                                width: 15.5px;
+                              //  fill: $todolist-grey-2-rgba;
+                                transition-duration: .3s;
+                                transition-property: fill;
+                                transition-timing-function: ease;
+                            }
+
+                            &:hover .single-task-menu {
+                             //   fill: $todolist-blue-3-rgba;
+                                transition-duration: .3s;
+                                transition-property: fill;
+                                transition-timing-function: ease;
+                            }
+                        }
+
+                        .single-rolled-menu-wrapper__toggled-menu {
+                            width: 14em;
+                            background-color: #ffffff;
+                            border-radius: 10px;
+                            position: absolute;
+                            top: 0;
+                            left: 2.5em;
+                            -webkit-box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+                            -moz-box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+                            box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+                            display: none;
+                            padding: .5em .5em;
+
+                            .toggled-menu__options-content {
+                                width: 100%;
+                                height: 100%;
+                                display: block;
+
+                                .options-content__area {
+                                    width: 100%;
+                                    border-top: 1px solid rgba(204,210,222, .3);
+                                    padding: 5px 0;
+
+                                    .toggled-menu__option {
+                                        padding: 8px 20px;
+                                        font-size: .85rem;
+                                     //   color: $todolist-black-3-rgba;
+                                        font-weight: 400;
+                                        cursor: pointer;
+                                        border-radius: 5px;
+                                        transition-property: color, background-color;
+                                        transition-timing-function: ease;
+                                        transition-duration: .3s;
+                                        text-decoration: none;
+
+                                        &:hover, &:focus {
+                                            background-color: rgba(235,242,255, .5);
+                                        //    color: $todolist-blue-3-rgba;
+                                            transition-property: color, background-color;
+                                            transition-timing-function: ease;
+                                            transition-duration: .3s;
+                                        }
+                                    }
+
+                                    &:nth-child(1) {
+                                        border-top: none;
+                                    }
+                                }
+                            }
+                        }
+
+                        .single-rolled-menu-wrapper__toggled-menu.is-active {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+
+        .data-box__task-details-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 10px;
+
+            .task-details {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                margin-right: 15px;
+
+                .task-details__value {
+                    font-size: .8rem;
+                  //  color: $todolist-grey-2-rgba;
+                    margin-left: 5px;
+                    display: block;
+                }
+            }
+
+            .task-details-wrapper__priority-box {
+                .priority-box__point {
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 100%;
+                    background-color: #ff5252;
+                    display: block;
+                }
+            }
+
+            .task-details-wrapper__project-box {
+                .project-box__point {
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 100%;
+                   // background-color: $todolist-blue-3-rgba;
+                    display: block;
+                }
+            }
+
+            .task-details-wrapper__user-box {
+                .user-box__point {
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 100%;
+                    background-color: #05c46b;
+                    display: block;
+                }
+            }
+        }
+
+        &:hover .data-box__single-rolled-menu-wrapper {
+            visibility: visible !important;
+            opacity: 1 !important;
+            transition-property: visibility, opacity;
+            transition-duration: .3s;
+            transition-timing-function: ease;
+        }
+    }
+}

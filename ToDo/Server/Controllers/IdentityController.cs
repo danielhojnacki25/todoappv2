@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -17,7 +18,6 @@ public class IdentityController : ControllerBase
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly IConfiguration _configuration;
-
     public IdentityController(UserManager<User> userManager,
         SignInManager<User> signInManager,
         IConfiguration configuration)
@@ -91,7 +91,7 @@ public class IdentityController : ControllerBase
     }
 
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout()
+    public async Task<IActionResult> Logout([FromBody] LoginViewModel model)
     {
         await _signInManager.SignOutAsync();
         return Ok();

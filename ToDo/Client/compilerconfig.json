@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "wwwroot/sass/_main.css",
+    "inputFile": "wwwroot/sass/_main.scss"
+  },
+  {
+    "outputFile": "wwwroot/sass/style.css",
+    "inputFile": "wwwroot/sass/style.scss"
+  }
+]

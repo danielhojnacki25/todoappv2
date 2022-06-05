@@ -1,5 +1,6 @@
 ﻿using ToDo.Common.Dtos.AppTasks;
 using ToDo.Data.Models;
+using ToDo.Mappers.Projects;
 using ToDo.Mappers.Users;
 
 namespace ToDo.Mappers.AppTasks;
@@ -13,9 +14,11 @@ public static class AppTaskMapper
         Description = task.Description,
         EndDate = task.EndDate,
         Priority = task.Priority,
+        DeadlineDate = task.DeadlineDate,
         TargetUser = task.TargetUser?.MapToDto(),
         SourceUser = task.SourceUser?.MapToDto(),
         Status = task.Status,
-        Title = task.Title
+        Title = task.Title,
+        ProjectDto = task.Project?.MapToDto()
     };
 }

@@ -1,0 +1,140 @@
+﻿@page "/projects"
+
+@using ToDo.Client.Components
+@using ToDo.Common.Dtos.Projects
+@using ToDo.Common.Dtos.Users
+@using ToDo.Services.Projects
+
+@inject IProjectService _projectService
+
+<CascadingValue Value="this">
+    <CascadingValue Value="MainLayout">
+        <CascadingValue Value="UserDto">
+            @if (_initialized)
+            {
+                <section class="projects-page-container">
+                    <div class="projects-page-container__content-wrapper">
+                        <div class="projects-page-container__header">
+                            <div class="title-box">
+                                <h2 class="projects-page-container__title">Projects</h2>
+                                <p class="projects-page-container__sub-title text">Here is a list of projects.</p>
+                            </div>
+                        </div>
+                        <SuccessAlert @ref="_successAlert"></SuccessAlert>
+                        <ErrorAlert @ref="_errorAlert"></ErrorAlert>
+                        @if (ProjectDtos.Any())
+                        {
+                            <div class="projects-page-container__projects-list-wrapper">
+                                @foreach (var p in ProjectDtos)
+                                {
+
+                                    <div class="projects-list-wrapper__project-box">
+                                        <div class="project-box__content">
+                                            <div class="project-box__data-box project-box__data-box--left">
+                                                <div class="data-box__wrapper">
+                                                    <div class="data-box__project-name">
+                                                        <span class="project-name">@p.Name</span>
+                                                    </div>
+                                                    <div class="data-box__project-description">
+                                                        <span class="project-description">@p.Description</span>
+                                                    </div>
+                                                    <div class="data-box__project-author">
+                                                              <span class="project-author">Created by @p.UserDto.Email</span>
+                                                    </div>
+                                                    <div class="data-box__project-active-tasks">
+                                                        <span class="project-active-tasks__value"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="project-box__data-box project-box__data-box--right">
+                                                <div class="data-box__single-rolled-menu-wrapper js-single-rolled-menu-wrapper">
+                                                    <div class="single-rolled-menu-wrapper__box js-toggle-single-task-menu">
+                                                        <svg version="1.1" class="single-task-menu" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                             x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
+                                                            <path d="M328,256c0,39.8-32.2,72-72,72s-72-32.2-72-72s32.2-72,72-72S328,216.2,328,256z M432,184c-39.8,0-72,32.2-72,72
+	                                        s32.2,72,72,72s72-32.2,72-72S471.8,184,432,184z M80,184c-39.8,0-72,32.2-72,72s32.2,72,72,72s72-32.2,72-72S119.8,184,80,184z" /></svg>
+                                                    </div>
+                                                    <div class="single-rolled-menu-wrapper__toggled-menu js-single-task-menu">
+                                                        <div class="toggled-menu__options-content">
+                                                            <div class="options-content__area">
+                                                                <a class="toggled-menu__option option edit-task-option">Edit Project</a>
+                                                                <a class="toggled-menu__option option go-to-project-option" href="/projects/@p.Id/tasks">See Tasks</a>
+                                                                <a class="toggled-menu__option option go-to-project-option">Details</a>
+                                                            </div>
+                                                            <div class="options-content__area">
+                                                                @*<a class="toggled-menu__option option delete-task-option" @onclick="(() => DeleteProject(p.Id.Value))">Delete Project</a>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*@foreach (var t in p.AppTasks)
+                                        {
+                                        <span>@t.Title</span>
+                                        }*@
+                                }
+                            </div>
+                        }
+                        @if (!ProjectDtos.Any())
+                        {
+                            <div class="user-global__empty-list-container">
+                                <p class="empty-list-container__text">There are currently no projects.</p>
+                            </div>
+                        }
+                        <div class="user-global__fast-create-container">
+                            <div class="fast-create-container__image-box">
+                                <picture>
+                                    <img class="fast-create-container__image" src="img/index-photo-1.jpg" />
+                                </picture>
+                            </div>
+                            <div class="fast-create-container__button-wrapper">
+                                <div class="button-wrapper__cta-box cta-box">
+                                    <button class="cta-box__cta-btn cta-box__cta-btn--primary" @onclick="(ShowCreateProjectModal)">Create Project</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <CreateProjectModal @ref="_createProjectModal" UserDto="UserDto"></CreateProjectModal>
+
+                </section>
+            }
+        </CascadingValue>
+    </CascadingValue>
+</CascadingValue>
+
+@code {
+    private SuccessAlert _successAlert;
+    private ErrorAlert _errorAlert;
+    private CreateProjectModal _createProjectModal;
+
+    [CascadingParameter]
+    private MainLayout? MainLayout { get; set; }
+
+    [CascadingParameter]
+    private UserDto? UserDto { get; set; }
+
+    public IList<ProjectDto> ProjectDtos { get; set; } = new List<ProjectDto>();
+
+    private bool _initialized;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetProjectsAsync();
+        _initialized = true;
+    }
+
+    public async Task GetProjectsAsync()
+    {
+        ProjectDtos = await _projectService.GetProjectsAsync();
+        StateHasChanged();
+    }
+
+    private void ShowCreateProjectModal()
+    {
+        _createProjectModal.Show();
+    }
+}

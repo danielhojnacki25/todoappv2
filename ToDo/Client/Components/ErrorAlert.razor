@@ -1,0 +1,28 @@
+﻿@using Index = ToDo.Client.Pages.Index
+@if (_error)
+{
+    <div class="notification-container notification-container--error">
+        <p class="message-value">@_message</p>
+    </div>
+}
+
+@code {
+    [CascadingParameter]
+    private Index _indexPage { get; set; }
+    public string _message { get; set; }
+
+    private bool _error;
+
+    public void Show(string message)
+    {
+        _message = message;
+        _error = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        _error = false;
+        StateHasChanged();
+    }
+}

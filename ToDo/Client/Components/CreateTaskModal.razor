@@ -1,0 +1,161 @@
+﻿@using Microsoft.AspNetCore.Components
+@using ToDo.Common.Dtos.Projects
+@using ToDo.Common.Dtos.Users
+@using ToDo.Common.Enums
+@using ToDo.Common.ViewModels.AppTasks
+@using ToDo.Services.AppTasks
+@using ToDo.Services.Projects
+@using ToDo.Services.Users
+@inject HttpClient _httpClient
+@inject IProjectService _projectService
+@inject IUserService _userService
+@inject IAppTaskService _appTaskService
+
+<CascadingValue Value="this">
+    <CascadingValue Value="MainLayout">
+        <CascadingValue Value="TasksList">
+
+            <div class="create-task-modal @(_active ? "is-active" : "")">
+                <div class="create-task-modal__content">
+                    <div class="create-task-modal__create-ui-wrapper">
+                        <div class="create-ui-wrapper__close-modal-box">
+                            <div class="close-modal-box__content" @onclick="(Close)">
+                                <svg class="close-modal-box__icon svg-icon" version="1.1" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     x="0px" y="0px" viewBox="0 0 352 512" xml:space="preserve">
+                                <path d="M242.7,256l100.1-100.1c12.3-12.3,12.3-32.2,0-44.5l-22.2-22.2c-12.3-12.3-32.2-12.3-44.5,0L176,189.3L75.9,89.2
+	                            c-12.3-12.3-32.2-12.3-44.5,0L9.2,111.4c-12.3,12.3-12.3,32.2,0,44.5L109.3,256L9.2,356.1c-12.3,12.3-12.3,32.2,0,44.5l22.2,22.2
+	                            c12.3,12.3,32.2,12.3,44.5,0L176,322.7l100.1,100.1c12.3,12.3,32.2,12.3,44.5,0l22.2-22.2c12.3-12.3,12.3-32.2,0-44.5L242.7,256z" /></svg>
+                            </div>
+                        </div>
+                        <div class="create-ui-wrapper__content">
+                            <div class="create-ui-wrapper__header">
+                                <div class="header__title-box">
+                                    <h2 class="title">Create Task</h2>
+                                    <p class="subtitle">Fill in the visible fields to create a new task.</p>
+                                </div>
+                            </div>
+                            <div class="create-ui-wrapper__new-task-container">
+                                <EditForm Model="@_newTaskModel" OnValidSubmit="SubmitCreateTask" class="new-task-form form global-form">
+                                    <DataAnnotationsValidator />
+                                    <div class="form__field task-author-field">
+                                        <label class="form__label">Author</label>
+                                        <InputText type="text" class="form__input author-input" id="author-input" @bind-Value="_newTaskModel.SourceUserEmail" readonly></InputText>
+                                        <ValidationMessage For="() => _newTaskModel.SourceUserEmail" />
+                                    </div>
+                                    <div class="form__field task-target-field">
+                                        <label class="form__label">Target User</label>
+                                        <InputSelect class="form__input target-input" type="select" @bind-Value="_newTaskModel.TargetUserId">
+                                            <option selected>Select Target User</option>
+                                            @foreach (var u in Users)
+                                            {
+                                                <option value="@u.Id">@u.Email</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="() => _newTaskModel.TargetUserId" />
+                                    </div>
+                                    <div class="form__field task-title-field">
+                                        <label class="form__label">Title</label>
+                                        <InputText type="text" class="form__input title-input" id="title-input" @bind-Value="_newTaskModel.Title"></InputText>
+                                        <ValidationMessage For="() => _newTaskModel.Title" />
+                                    </div>
+                                    <div class="form__field task-long-field">
+                                        <label class="form__label">Description</label>
+                                        <InputTextArea class="form__input long-description-input" id="long-description-area" @bind-Value="_newTaskModel.Description"></InputTextArea>
+                                    </div>
+                                    <div class="form__field form__field--flex-display">
+                                        <div class="field-wrapper">
+                                            <label class="form__label">Priority</label>
+                                            <InputSelect class="form__input priority-input" type="select" @bind-Value="_newTaskModel.Priority">
+                                                @foreach (var priority in Enum.GetValues(typeof(Priority)))
+                                                {
+                                                    <option value="@priority">@priority</option>
+                                                }
+                                            </InputSelect>
+                                        </div>
+                                        <div class="field-wrapper">
+                                            <label class="form__label">Deadline</label>
+                                            <InputDate @bind-Value="_newTaskModel.DeadlineDate" class="form__input deadline-input"></InputDate>
+                                        </div>
+                                        <div class="field-wrapper">
+                                            <label class="form__label">Project</label>
+                                            <InputSelect class="form__input priority-input" type="select" @bind-Value="_newTaskModel.ProjectId">
+                                                <option value="0" selected>Unset project</option>
+                                                @foreach (var project in Projects)
+                                                {
+                                                    <option value="@project.Id">@project.Name</option>
+                                                }
+                                            </InputSelect>
+                                        </div>
+                                    </div>
+                                    <div class="form__field">
+                                        <div class="cta-box">
+                                            <button class="cta-box__cta-btn cta-box__cta-btn--primary" type="submit">Create Task</button>
+                                        </div>
+                                    </div>
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </CascadingValue>
+    </CascadingValue>
+</CascadingValue>
+
+@code {
+    [CascadingParameter]
+    private MainLayout? MainLayout { get; set; }
+    [CascadingParameter]
+    private TasksList? TasksList { get; set; }
+
+    [Parameter]
+    public UserDto UserDto { get; set; }
+
+    private CreateAppTaskVewModel _newTaskModel = new();
+    private IList<ProjectDto> Projects { get; set; } = new List<ProjectDto>();
+    private IList<UserDto> Users { get; set; } = new List<UserDto>();
+
+    private bool _active;
+    private bool _processing;
+    public int ShortDescriptionMaxLength = 50;
+    private EditContext _editContext;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _editContext = new EditContext(_newTaskModel);
+
+        _newTaskModel.SourceUserEmail = UserDto.Email;
+        _newTaskModel.DeadlineDate = DateTime.Now.Date.AddDays(2);
+        Projects = await _projectService.GetProjectsAsync();
+        Users = await _userService.GetAppUsersAsync();
+    }
+
+    private async Task SubmitCreateTask()
+    {
+        var isValid = _editContext.Validate();
+
+        if (isValid)
+        {
+            await _appTaskService.CreateAppTaskAsync(_newTaskModel);
+            Close();
+            await TasksList.GetTasksAsync();
+            MainLayout?.ShowSuccessAlert("The task has been added successfully");
+            _newTaskModel = new CreateAppTaskVewModel();
+            _newTaskModel.SourceUserEmail = UserDto.Email;
+            _newTaskModel.DeadlineDate = DateTime.Now.Date.AddDays(2);
+
+        }
+    }
+
+    public void Show()
+    {
+        _active = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        _active = false;
+        StateHasChanged();
+    }
+}

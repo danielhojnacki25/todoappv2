@@ -1,0 +1,152 @@
+﻿@import "../sass-utils/_variables";
+@import "../sass-utils/_mixins";
+
+
+.create-task-modal, .create-project-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .2);
+    display: none;
+
+    .create-task-modal__content, .create-project-modal__content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .create-task-modal__create-ui-wrapper, .create-project-modal__create-ui-wrapper {
+            width: 40em;
+            height: 50em;
+            background-color: #ffffff;
+            -webkit-box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+            box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+            border-radius: 1em;
+            box-sizing: border-box;
+            padding: 1em 1em;
+            position: relative;
+
+            .create-ui-wrapper__close-modal-box {
+                position: absolute;
+                top: .5em;
+                right: 1.1em;
+
+                .close-modal-box__content {
+                    width: 2.1em;
+                    height: 2.1em;
+                    border-radius: 50%;
+                    background-color: #fff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition-duration: .3s;
+                    transition-property: background-color;
+                    transition-timing-function: ease;
+
+                    .close-modal-box__icon {
+                        width: .65em;
+                      //  fill: $todolist-black-3-rgba;
+                        transition-duration: .3s;
+                        transition-property: fill;
+                        transition-timing-function: ease;
+                    }
+
+                    &:hover {
+                        background-color: #ebf2ff;
+                        transition-duration: .3s;
+                        transition-property: background-color;
+                        transition-timing-function: ease;
+                    }
+
+                    &:hover .close-modal-box__icon {
+                     //   fill: $todolist-blue-3-rgba !important;
+                        transition-duration: .3s;
+                        transition-property: fill;
+                        transition-timing-function: ease;
+                    }
+                }
+            }
+
+            .create-ui-wrapper__content {
+                margin: 2em 1em;
+                padding: 0 2em;
+                overflow-y: hidden;
+                /* width */
+                /*&::-webkit-scrollbar {
+                    width: 5px;
+                }*/
+                /* Track */
+                /*&::-webkit-scrollbar-track {
+                    background: rgba(204,210,222, .3);
+                }*/
+                /* Handle */
+                /*&::-webkit-scrollbar-thumb {
+                    background: rgba(204,210,222, .8);
+                }*/
+                /* Handle on hover */
+                /*&::-webkit-scrollbar-thumb:hover {
+                    background: rgba(204,210,222, 1);
+                }*/
+                .create-ui-wrapper__header {
+                    .header__title-box {
+                        .subtitle {
+                            margin-top: 5px;
+                            font-size: .9rem;
+                          //  color: $todolist-grey-2-rgba;
+                        }
+                    }
+                }
+
+                .create-ui-wrapper__new-task-container, .create-ui-wrapper__new-project-container {
+                    margin-top: 2em;
+                    width: 100%;
+
+                    .form {
+
+                        .form__field {
+                            width: 100%;
+                            margin-bottom: 20px;
+
+                            textarea {
+                                min-height: 8em;
+                                resize: none;
+                            }
+
+                            .short-desc-length-counter {
+                                font-size: .8rem;
+                                font-weight: 500;
+                           //     color: $todolist-blue-3-rgba;
+                                display: inline-block;
+                                float: right;
+                            }
+
+                            &--flex-display {
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-start;
+
+                                .field-wrapper {
+                                    margin-right: 15px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .create-project-modal__create-ui-wrapper {
+            height: 45em;
+        }
+    }
+}
+
+.create-task-modal.is-active, .create-project-modal.is-active {
+    display: block;
+}

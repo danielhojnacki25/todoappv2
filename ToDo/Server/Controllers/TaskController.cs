@@ -19,21 +19,19 @@ public class TaskController : ControllerBase
     public TaskController(IMediator mediator)
         => _mediator = mediator;
 
-
     [HttpPost("create")]
     public async Task<IActionResult> CreateTask([FromBody] CreateAppTaskVewModel model)
         => Ok(await _mediator.Send(new CreateTaskCommand(model)));
 
     [HttpPost("delete")]
-    public async Task<IActionResult> DeleteTask([FromBody] AppTaskDto model)
-        => Ok(await _mediator.Send(new DeleteTaskCommand(model)));
+    public async Task<IActionResult> CreateTask([FromBody] long taskId)
+        => Ok(await _mediator.Send(new DeleteTaskCommand(taskId)));
 
     [HttpGet("task/{taskId}")]
     public async Task<ActionResult<AppTaskDto>> GetTaskById(long taskId)
         => Ok(await _mediator.Send(new GetAppTaskByIdQuery(taskId)));
 
     [HttpGet("user/{userId}/tasks")]
-    public async Task<ActionResult<IList<AppTaskDto>>> GetTasksByUser(string userId, int take, int skip,
-        [FromBody] AppTaskDtoFilter appTaskDtoFilter)
-        => Ok(await _mediator.Send(new GetAppTasksByUserQuery(userId, take, skip, appTaskDtoFilter)));
+    public async Task<ActionResult<IList<AppTaskDto>>> GetTasksByUser(string userId)
+        => Ok(await _mediator.Send(new GetAppTasksByUserQuery(userId, new AppTaskDtoFilter())));
 }

@@ -1,0 +1,23 @@
+﻿//base
+
+@import "base/_reset";
+@import "base/_global";
+@import "base/_typography";
+
+// global
+
+@import "global/_forms";
+@import "global/_buttons";
+@import "global/_croppie";
+@import "global/_notifications";
+@import "global/_modals";
+
+// layouts
+@import "layouts/_main-layout";
+
+// pages
+
+@import "pages/_authorization";
+@import "pages/_index";
+@import "pages/_projects";
+@import "pages/_users";

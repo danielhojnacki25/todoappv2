@@ -24,7 +24,11 @@ public class GetAppTasksByUserQueryHandler : IRequestHandler<GetAppTasksByUserQu
         var user = await _userRepository.FindByConditionAsync(x => x.Id.Equals(request.UserId)).FirstOrDefaultAsync(cancellationToken: cancellationToken);
         if (user == null) return new List<AppTaskDto>();
 
-        var tasks = await _appTaskRepository.GetAppTasksByUserAsync(request.Take, request.Skip, request.AppTaskDtoFilter);
+        var tasks = await _appTaskRepository.FindByConditionAsync(x => x.SourceUser.Id.Equals(request.UserId))
+            .Include(x => x.SourceUser)
+            .Include(x => x.TargetUser)
+            .Include(x => x.Project)
+            .ToListAsync(cancellationToken: cancellationToken);
         return tasks.Select(x => x.MapToDto()).ToList();
     }
 }

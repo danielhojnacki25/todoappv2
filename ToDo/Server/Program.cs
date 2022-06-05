@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using ToDo.Data;
 using ToDo.Data.Models;
 using ToDo.Repository.AppTasks;
+using ToDo.Repository.Projects;
 using ToDo.Repository.Users;
 using ToDo.Services.AppTasks.Queries.GetAppTaskById;
 using ToDoApp.Services.Users.Queries.GetUserById;
@@ -54,6 +55,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAppTaskRepository, AppTaskRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 builder.Services.AddMediatR(typeof(GetAppTaskByIdQuery));
 builder.Services.AddMediatR(typeof(GetUserByIdQuery));

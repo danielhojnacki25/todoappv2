@@ -1,0 +1,61 @@
+﻿@import "../sass-utils/_variables";
+@import "../sass-utils/_mixins";
+
+.form, .input-box {
+    input[type=text], input[type=password], input[type=email], textarea, select, input[type=date] {
+        width: 100%;
+        padding: 14px 15px;
+        border: 1px solid $flat-grey--alpha-08;
+        font-size: 16px;
+        background-color: #ffffff;
+        color: $font-primary-color;
+        border-radius: 5px;
+
+        &:focus {
+            outline: none;
+            border: 1px solid $primary-color--alpha-08;
+            @include transition-property(border);
+            @include transition-duration(.2s);
+            @include transition-timing-function(ease);
+        }
+
+        &::placeholder {
+            font-size: 14px;
+            color: $font-secondary-color;
+        }
+    }
+
+    textarea {
+        resize: none;
+        /* width */
+        &::-webkit-scrollbar {
+            width: 3px;
+        }
+        /* Track */
+        &::-webkit-scrollbar-track {
+            background: $flat-grey--alpha-02;
+        }
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: $flat-grey--alpha-08;
+        }
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: $flat-grey;
+        }
+    }
+
+    label {
+        font-size: 12px;
+        font-weight: 500;
+        color: $font-secondary-color;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .validation-message {
+        color: $error-color--text;
+        font-size: 13px;
+        font-weight: 400;
+    }
+}

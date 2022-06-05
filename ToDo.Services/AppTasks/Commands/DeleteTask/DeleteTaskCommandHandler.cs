@@ -13,7 +13,7 @@ public class DeleteTaskCommandHandler : IRequestHandler<DeleteTaskCommand, Unit>
 
     public async Task<Unit> Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
     {
-        var task = await _appTaskRepository.FindByConditionAsync(x => x.Id == request.AppTaskDto.Id).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        var task = await _appTaskRepository.FindByConditionAsync(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (task == null) return Unit.Value;
         await _appTaskRepository.RemoveAsync(task);
         return Unit.Value;

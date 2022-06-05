@@ -1,0 +1,91 @@
+﻿@page "/user/login"
+
+@using ToDo.Services.Identities
+@using Microsoft.AspNetCore.Components
+@using ToDo.Common.ViewModels.Identities
+
+@inject IIdentityService _identityService
+@inject NavigationManager _navigationManager
+@inject IStringLocalizer<Login> _localizer
+
+@layout IdentityLayout
+
+<CascadingValue Value="this">
+    <CascadingValue Value="IdentityLayout">
+        <div class="authorization-container__inner sign-up-container">
+            <div class="overflow-header">
+                <div class="overflow-header__inner-content">
+                    <div class="auth-cta-container">
+                        <div class="auth-cta-container__inner">
+                            <span class="user-auth-cta">@_localizer["Have an account?"] <a class="smart-btn smart-link" href="/user/login">@_localizer["Sign In now"]</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="authorization-container__content-wrap">
+                <div class="content-wrap__inner-flex">
+                    <div class="inner-flex__wrapper inner-flex__wrapper--right-box">
+                        <div class="authorization__smart-container">
+                            <div class="smart-container__inner-content">
+                                <div class="smart-container__inner-content">
+                                    <div class="smart-container__header-container">
+                                        <div class="title-box">
+                                            <h1 class="title">@_localizer["Sign In to To Do App"]</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="authorization-form">
+                                    <div class="authorization-form__content">
+                                        <EditForm class="authorization-smart-form form" Model="_loginModel" OnValidSubmit="HandleLogin">
+                                            <DataAnnotationsValidator />
+                                            <ValidationSummary />
+                                            <div class="form__field">
+                                                <label for="email">Email address</label>
+                                                <InputText type="text" Id="email" class="form-control form-data-input" @bind-Value="_loginModel.EmailOrUsername" />
+                                                <ValidationMessage For="@(() => _loginModel.EmailOrUsername)" />
+                                            </div>
+                                            <div class="form__field">
+                                                <label for="password">Password</label>
+                                                <InputText Id="password" type="password" class="form-control form-data-input" @bind-Value="_loginModel.Password" />
+                                                <ValidationMessage For="@(() => _loginModel.Password)" />
+                                            </div>
+                                            <div class="form__field">
+                                                <div class="cta-box">
+                                                    <button type="submit" class="cta-box__cta-btn cta-box__cta-btn--primary submit-btn">@_localizer["Sign In"]</button>
+                                                </div>
+                                            </div>
+                                        </EditForm>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-footer">
+                <div class="overflow-footer__inner-content">
+                    <div class="footer-boot">
+                        <span class="copyright">&copy; @DateTime.Now.Year Talentee. @_localizer["All rights reserved."]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </CascadingValue>
+</CascadingValue>
+
+@code {
+    [CascadingParameter]
+    private IdentityLayout? IdentityLayout { get; set; }
+
+    private LoginViewModel _loginModel = new();
+
+    private async Task HandleLogin()
+    {
+        var result = await _identityService.LoginAsync(_loginModel);
+
+        if (result is { Successful: true })
+        {
+            _navigationManager.NavigateTo("/", true);
+        }
+    }
+}

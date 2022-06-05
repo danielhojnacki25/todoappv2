@@ -8,5 +8,7 @@ public static class UserMapper
     public static UserDto MapToDto(this User user) => new()
     {
         Id = user.Id,
+        Email = user.Email,
+        UserName = user.UserName,
     };
 }

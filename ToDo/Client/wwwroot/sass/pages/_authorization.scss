@@ -1,0 +1,297 @@
+﻿@import "../sass-utils/_variables";
+@import "../sass-utils/_mixins";
+
+.auth-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .authorization-container__inner {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        .overflow-header {
+            top: 0;
+            left: 0;
+            padding: 14px 0;
+            width: 100%;
+            position: absolute;
+
+            .overflow-header__inner-content {
+                width: 90%;
+                margin: 0 auto;
+                @include flexbox;
+                @include justify-content(flex-end);
+                padding: 16px 0;
+                position: relative;
+
+                .auth-cta-container {
+
+                    .auth-cta-container__inner {
+                        .user-auth-cta {
+                            font-size: 14px;
+                            color: $font-primary-color;
+                            font-weight: 400;
+
+                            .smart-link {
+                                display: inline-block;
+                                color: $primary-color--alpha-08;
+                                font-weight: 400;
+                                text-decoration: none;
+                                @include transition-property(color);
+                                @include transition-duration(.2s);
+                                @include transition-timing-function(ease);
+
+                                &:hover, &:focus {
+                                    color: $primary-color--hover;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .authorization-container__content-wrap {
+
+            .content-wrap__inner-flex {
+                @include flexbox;
+                @include align-items(center);
+                @include justify-content(center);
+                height: 100vh;
+                .inner-flex__wrapper {
+                    &--right-box {
+                        width: 100%;
+                        @include flexbox;
+                        @include align-items(center);
+                        @include justify-content(center);
+
+                        .authorization__smart-container {
+                            width: 600px;
+
+                            .smart-container__inner-content {
+                                .smart-container__header-container {
+                                    .title-box {
+                                        .title {
+                                            color: $font-primary-color;
+                                            font-weight: 800;
+                                            font-size: 58px;
+                                            text-align: left;
+                                        }
+
+                                        .subtitle-box {
+                                            margin-top: 15px;
+
+                                            .subtitle {
+                                                font-size: 20px;
+                                                font-weight: 400;
+                                                color: $font-primary-color;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .authorization-form {
+                                    margin-top: 25px;
+
+                                    .invalid-state-container {
+                                        width: 90%;
+                                        border-radius: 5px;
+
+                                        .invalid-state-container__inner {
+                                            padding: 10px 0;
+
+                                            .tag {
+                                                font-size: 14px;
+                                                text-align: left;
+                                                font-weight: 500;
+                                                display: block;
+                                                @include flexbox;
+                                                @include align-items(center);
+
+                                                .alert-icon-box {
+                                                    margin-right: 4px;
+
+                                                    .icon {
+                                                        display: block;
+                                                        width: 22px;
+                                                    }
+                                                }
+                                            }
+
+                                            &.error {
+                                                .tag {
+                                                    color: $error-color--text;
+                                                }
+
+                                                .icon {
+                                                    fill: $error-color--text;
+                                                }
+                                            }
+
+                                            &.success {
+                                                .tag {
+                                                    color: $success-color--text;
+                                                }
+
+                                                .icon {
+                                                    fill: $success-color--text;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .authorization-form__content {
+                                        width: 90%;
+
+                                        .authorization-smart-form {
+
+                                            .form__field {
+                                                padding: 5px 0;
+                                            }
+
+                                            .cta-box {
+                                                justify-content: flex-start;
+
+                                                .submit-btn {
+                                                    padding: 14px 15px;
+                                                    width: 255px;
+                                                }
+                                            }
+
+                                            .form__password-recovery-box {
+                                                padding: 0;
+                                                margin-top: -6px;
+                                                margin-bottom: 10px;
+
+                                                .forgot-password {
+                                                    font-size: 14px;
+                                                    color: $primary-color--alpha-08;
+                                                    font-weight: 400;
+                                                    text-align: left;
+                                                    display: inline-block;
+                                                    text-decoration: none;
+                                                    @include transition-property(color);
+                                                    @include transition-duration(.2s);
+                                                    @include transition-timing-function(ease);
+
+                                                    &:hover {
+                                                        color: $primary-color--hover;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .form-rule-container {
+                                            .content {
+                                                padding: 15px 0;
+                                                line-height: 22px;
+                                                color: $font-secondary-color;
+                                                font-size: 14px;
+
+                                                .smart-anchor {
+                                                    display: inline-block;
+                                                    color: $primary-color--alpha-08;
+                                                    font-weight: 500;
+                                                    text-decoration: none;
+                                                    @include transition-property(color);
+                                                    @include transition-duration(.2s);
+                                                    @include transition-timing-function(ease);
+
+                                                    &:hover, &:focus {
+                                                        color: $primary-color--hover;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .authorization-form__external-providers-container {
+                                        margin-top: 25px;
+                                        position: relative;
+                                        width: 90%;
+                                        border-top: 1px solid $flat-grey--alpha-04;
+
+                                        .external-providers-container__tag-box {
+                                            width: 100%;
+                                            position: absolute;
+                                            @include flexbox;
+                                            @include justify-content(center);
+                                            top: -14px;
+                                            padding: 4px 0;
+
+                                            span {
+                                                padding: 2px 10px;
+                                                font-size: 12px;
+                                                color: $font-primary-color !important;
+                                                text-align: center;
+                                                display: block;
+                                                width: 50px;
+                                                font-weight: 500;
+                                                background-color: #ffffff;
+                                            }
+                                        }
+
+                                        .external-providers-container__inner-content {
+                                            padding: 10px 0;
+
+                                            .external-login-providers {
+                                                .external-login-provider-container {
+                                                    .external-login-provider-container__inner {
+                                                        .external-logins-form {
+                                                            .external-logins-form__inner {
+                                                                .wrap {
+                                                                    .external-auth-container {
+                                                                        .cta-box {
+                                                                            .cta-btn {
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .text-danger {
+                                        font-size: 13px;
+                                        display: block;
+                                        font-weight: 500;
+                                        margin-top: 4px;
+                                        color: $error-color--text;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .overflow-footer {
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            padding: 14px 0;
+            width: 100%;
+            background-color: #ffffff;
+
+            .overflow-footer__inner-content {
+                .footer-boot {
+                    .copyright {
+                        font-size: 13px;
+                        color: $font-secondary-color;
+                        text-align: center;
+                        font-weight: 400;
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,76 @@
+﻿@page "/users"
+
+@using ToDo.Client.Components
+@using ToDo.Common.Dtos.Users
+@using ToDo.Services.Users
+
+@inject IUserService _userService
+
+<CascadingValue Value="this">
+    <CascadingValue Value="MainLayout">
+        @if (_initialized)
+        {
+                    <section class="employees-page-container">
+            <div class="employees-page-container__content-wrapper">
+                <div class="employees-page-container__header">
+                    <div class="title-box">
+                        <h2 class="employees-page-container__title">Employees</h2>
+                        <p class="employees-page-container__sub-title text">Here is a list of employees.</p>
+                    </div>
+                </div>
+                <SuccessAlert @ref="_successAlert"></SuccessAlert>
+                <ErrorAlert @ref="_errorAlert"></ErrorAlert>
+                @if (AppUsers.Any())
+                {
+                    <div class="employees-page-container__employee-list-wrapper">
+                        @foreach (var t in AppUsers)
+                        {
+                            <div class="employee-list-wrapper__employee-box">
+                                <div class="employee-box__content">
+                                    <div class="employee-box__data-box employee-box__data-box--left">
+                                        <div class="employee-box__employee-avatar">
+                                            <div class="user-image-box">
+                                                <img class="user-image-box__img" src="img/user-avatar.png"/>
+                                            </div>
+                                        </div>
+                                        <div class="data-box__wrapper">
+                                            <div class="data-box__employee-username">
+                                                <span class="employee-username">@t.UserName</span>
+                                            </div>
+                                            <div class="data-box__employee-full-name">
+                                                <span class="employee-full-name">@t.UserName</span>
+                                            </div>
+                                            <div class="data-box__employee-last-active">
+                                                @*                                               <span class="employee-last-active">Last active @t.LastActiveTime.ToShortDateString() @t.LastActiveTime.ToShortTimeString()</span>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </section>
+        }
+    </CascadingValue>
+</CascadingValue>
+
+@code {
+    private SuccessAlert _successAlert;
+    private ErrorAlert _errorAlert;
+
+    [CascadingParameter]
+    private MainLayout? MainLayout { get; set; }
+
+    private bool _initialized;
+
+    public IList<UserDto> AppUsers { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AppUsers = await _userService.GetAppUsersAsync();
+        _initialized = true;
+    }
+}

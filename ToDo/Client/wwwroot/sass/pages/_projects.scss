@@ -1,0 +1,205 @@
+﻿@import "../sass-utils/_variables";
+@import "../sass-utils/_mixins";
+
+.projects-page-container {
+    width: 100%;
+
+    .projects-page-container__content-wrapper {
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+
+        .projects-page-container__header {
+            margin-top: 2.5em;
+
+            .title-box {
+                .projects-page-container__sub-title {
+                    margin-top: 10px;
+                    //color: $todolist-grey-2-rgba;
+                }
+            }
+        }
+    }
+}
+
+.projects-page-container__projects-list-wrapper {
+    width: 100%;
+
+    .projects-list-wrapper__project-box {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1.4em 1.1em;
+        margin: 10px 0;
+        background-color: #ffffff;
+        border-bottom: 1px solid rgba(204,210,222, .5);
+
+        .project-box__content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+
+            .project-box__data-box {
+                display: flex;
+
+                &--left {
+                    width: 70%;
+                    margin-right: 1em;
+                    align-items: flex-start;
+
+                    .data-box__wrapper {
+                        .data-box__project-name {
+                            .project-name {
+                                font-size: 1rem;
+                                font-weight: 400;
+                          //      color: $todolist-black-3-rgba;
+                            }
+                        }
+
+                        .data-box__project-description {
+                            margin-top: 2px;
+
+                            .project-description {
+                                font-size: .85rem;
+                                color: #57595e;
+                                font-weight: 400;
+                            }
+                        }
+
+                        .data-box__project-author {
+                            margin-top: 9px;
+
+                            .project-author {
+                                font-size: .85rem;
+                             //   color: $todolist-black-3-rgba;
+                                font-weight: 400;
+                            }
+                        }
+
+                        .data-box__project-active-tasks {
+                            margin-top: 5px;
+
+                            .project-active-tasks__value {
+                                .project-active-tasks__link {
+                                    font-size: .85rem;
+                                  //  color: $todolist-blue-3-rgba;
+                                    font-weight: 400;
+                                    text-decoration: none;
+                                    display: inline-block;
+
+                                    &:hover, &:focus {
+                                        text-decoration: underline;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &--right {
+                    width: 30%;
+                    position: relative;
+
+                    .data-box__single-rolled-menu-wrapper {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        display: block;
+                        visibility: hidden;
+                        opacity: 0;
+                        transition-property: visibility, opacity;
+                        transition-duration: .3s;
+                        transition-timing-function: ease;
+
+                        .single-rolled-menu-wrapper__box {
+                            width: 2em;
+                            height: 2em;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+
+                            .single-task-menu {
+                                width: 15.5px;
+                              //  fill: $todolist-grey-2-rgba;
+                                transition-duration: .3s;
+                                transition-property: fill;
+                                transition-timing-function: ease;
+                            }
+
+                            &:hover .single-task-menu {
+                             //   fill: $todolist-blue-3-rgba;
+                                transition-duration: .3s;
+                                transition-property: fill;
+                                transition-timing-function: ease;
+                            }
+                        }
+
+                        .single-rolled-menu-wrapper__toggled-menu {
+                            width: 14em;
+                            background-color: #ffffff;
+                            border-radius: 10px;
+                            position: absolute;
+                            top: 0;
+                            left: 2.5em;
+                            -webkit-box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+                            -moz-box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+                            box-shadow: 0px 0px 10px 0px rgba(204,210,222,0.5);
+                            display: none;
+                            padding: .5em .5em;
+
+                            .toggled-menu__options-content {
+                                width: 100%;
+                                height: 100%;
+                                display: block;
+
+                                .options-content__area {
+                                    width: 100%;
+                                    border-top: 1px solid rgba(204,210,222, .3);
+                                    padding: 5px 0;
+
+                                    .toggled-menu__option {
+                                        padding: 8px 20px;
+                                        font-size: .85rem;
+                                     //   color: $todolist-black-3-rgba;
+                                        font-weight: 400;
+                                        cursor: pointer;
+                                        border-radius: 5px;
+                                        transition-property: color, background-color;
+                                        transition-timing-function: ease;
+                                        transition-duration: .3s;
+                                        text-decoration: none;
+
+                                        &:hover, &:focus {
+                                            background-color: rgba(235,242,255, .5);
+                                           // color: $todolist-blue-3-rgba;
+                                            transition-property: color, background-color;
+                                            transition-timing-function: ease;
+                                            transition-duration: .3s;
+                                        }
+                                    }
+
+                                    &:nth-child(1) {
+                                        border-top: none;
+                                    }
+                                }
+                            }
+                        }
+
+                        .single-rolled-menu-wrapper__toggled-menu.is-active {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+
+        &:hover .data-box__single-rolled-menu-wrapper {
+            visibility: visible !important;
+            opacity: 1 !important;
+            transition-property: visibility, opacity;
+            transition-duration: .3s;
+            transition-timing-function: ease;
+        }
+    }
+}

@@ -1,20 +1,19 @@
-﻿@page "/"
+﻿@page "/tiktaktoe"
+
 @using ToDo.Data.Models
 @using ToDo.Data.Models.TicTakToeModel
 
 
 <PageTitle>List ToDo</PageTitle>
-   
-    
 
+<MudMainContent>
     <MudText Typo="Typo.h4" Style="margin-left: 350px;">Tik Tak Toe</MudText>
-    <MudContainer  Style="background-color: #BBDEFB; height: 600px; width:800px; " >
-         
-              
-            @if (Game != null)
-            {
-             <MudItem md="6" Style="margin-left: 90px; margin-top: 10px">
-                     <div class="game">
+    <MudContainer Style="background-color: #BBDEFB; height: 600px; width:800px; ">
+
+        @if (Game != null)
+        {
+            <MudItem md="6" Style="margin-left: 90px; margin-top: 10px">
+                <div class="game">
                     @for (var tt = 1; tt <= 3; tt++)
                     {
                         for (var vv = 1; vv <= 3; vv++)
@@ -27,25 +26,24 @@
 
                 </div>
 
-             </MudItem>  
-            
-                <MudItem md="6">
-                     <MudButton @onclick="@Reset" Variant="Variant.Outlined" Color="Color.Dark" Style="margin-left: 350px; margin-top: 50px">Reset Game</MudButton>
-                 @if (Game.Winner.HasValue)
+            </MudItem>
+
+            <MudItem md="6">
+                <MudButton @onclick="@Reset" Variant="Variant.Outlined" Color="Color.Dark" Style="margin-left: 350px; margin-top: 50px">Reset Game</MudButton>
+                @if (Game.Winner.HasValue)
                 {
-                    <MudAlert Style="margin-top: 20px" >@Game.Winner.Value has won the game! </MudAlert>
+                    <MudAlert Style="margin-top: 20px">@Game.Winner.Value has won the game! </MudAlert>
                 }
                 else if (Game.Squares.Count(x => x.Mark.HasValue) == 9)
                 {
                     <MudAlert>Game has been draw. </MudAlert>
                 }
                 <MudText Style="margin-top: 20px">Current Score: O @Game.OWinner-@Game.XWinner X</MudText>
-                </MudItem>
-               
-            }
-            
-       
+            </MudItem>
+
+        }
     </MudContainer>
+</MudMainContent>
 
 
 

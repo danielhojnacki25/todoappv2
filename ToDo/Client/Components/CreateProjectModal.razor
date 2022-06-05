@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Components
+@using ToDo.Client.Pages
+@using ToDo.Common.Dtos.Users
+@using ToDo.Common.ViewModels.Projects
+@using ToDo.Services.Projects
+
+@inject IProjectService _projectService
+
+<CascadingValue Value="this">
+    <CascadingValue Value="MainLayout">
+        <CascadingValue Value="Projects">
+            <div class="create-project-modal  @(_active ? "is-active" : "")">
+                <div class="create-project-modal__content">
+                    <div class="create-project-modal__create-ui-wrapper">
+                        <div class="create-ui-wrapper__close-modal-box">
+                            <div class="close-modal-box__content" @onclick="(() => Close())">
+                                <svg class="close-modal-box__icon svg-icon" version="1.1" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     x="0px" y="0px" viewBox="0 0 352 512" xml:space="preserve">
+                                <path d="M242.7,256l100.1-100.1c12.3-12.3,12.3-32.2,0-44.5l-22.2-22.2c-12.3-12.3-32.2-12.3-44.5,0L176,189.3L75.9,89.2
+	                            c-12.3-12.3-32.2-12.3-44.5,0L9.2,111.4c-12.3,12.3-12.3,32.2,0,44.5L109.3,256L9.2,356.1c-12.3,12.3-12.3,32.2,0,44.5l22.2,22.2
+	                            c12.3,12.3,32.2,12.3,44.5,0L176,322.7l100.1,100.1c12.3,12.3,32.2,12.3,44.5,0l22.2-22.2c12.3-12.3,12.3-32.2,0-44.5L242.7,256z" /></svg>
+                            </div>
+                        </div>
+                        <div class="create-ui-wrapper__content">
+                            <div class="create-ui-wrapper__header">
+                                <div class="header__title-box">
+                                    <h2 class="title">Create Project</h2>
+                                    <p class="subtitle">Fill in the visible fields to create a new project.</p>
+                                </div>
+                            </div>
+                            <div class="create-ui-wrapper__new-project-container">
+                                <EditForm Model="@_newProject" OnValidSubmit="@SubmitCreateProject" class="new-project-form form global-form">
+                                    <DataAnnotationsValidator />
+                                    <div class="form__field task-author-field">
+                                        <label class="form__label">Author</label>
+                                        <InputText type="text" class="form__input author-input" id="author-input" @bind-Value="_newProject.UserEmail" readonly></InputText>
+                                        <ValidationMessage For="() => _newProject.UserEmail" />
+                                    </div>
+                                    <div class="form__field task-title-field">
+                                        <label class="form__label">Project Name</label>
+                                        <InputText type="text" class="form__input title-input" id="title-input" @bind-Value="_newProject.Name"></InputText>
+                                        <ValidationMessage For="() => _newProject.Name" />
+                                    </div>
+                                    <div class="form__field task-long-field">
+                                        <label class="form__label">Project Description</label>
+                                        <InputTextArea class="form__input long-description-input" id="long-description-area" @bind-Value="_newProject.Description"></InputTextArea>
+                                    </div>
+                                    <div class="form__field">
+                                        <div class="cta-box">
+                                            <button class="cta-box__cta-btn cta-box__cta-btn--primary" type="submit">Create Project</button>
+                                        </div>
+                                    </div>
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </CascadingValue>
+    </CascadingValue>
+</CascadingValue>
+
+@code {
+    [CascadingParameter]
+    private MainLayout? MainLayout { get; set; }
+    [CascadingParameter]
+    private Projects? Projects { get; set; }
+    [Parameter]
+    public UserDto UserDto { get; set; }
+
+    private bool _active;
+    private bool _processing;
+    private EditContext _editContext;
+
+    private CreateProjectViewModel _newProject = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _editContext = new EditContext(_newProject);
+
+        _newProject.UserEmail = UserDto.Email;
+    }
+
+    private async Task SubmitCreateProject()
+    {
+        var isValid = _editContext.Validate();
+
+        if (isValid)
+        {
+            await _projectService.CreateProjectAsync(_newProject);
+            Close();
+            await Projects?.GetProjectsAsync();
+            MainLayout?.ShowSuccessAlert("The project has been added successfully");
+        }
+    }
+
+    public void Show()
+    {
+        _active = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        _active = false;
+        _newProject.Description = string.Empty;
+        _newProject.Name = string.Empty;
+        StateHasChanged();
+    }
+}

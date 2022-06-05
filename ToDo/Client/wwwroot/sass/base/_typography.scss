@@ -1,0 +1,37 @@
+﻿@import "../sass-utils/_mixins";
+@import "../sass-utils/_variables";
+
+
+p{
+    font-size: .9rem;
+    color: $font-primary-color;
+    font-weight: 400;
+    letter-spacing: normal;
+    span{
+        font-weight: 500;
+        display: inline-block;
+    }
+}
+
+h2 {
+    font-size: 2rem;
+    color: $font-primary-color;
+    font-weight: 400;
+    letter-spacing: normal;
+
+    span {
+        font-weight: 500;
+        display: inline-block;
+    }
+}
+h4 {
+    font-size: 1.2rem;
+    color: $font-primary-color;
+    font-weight: 400;
+    letter-spacing: normal;
+
+    span {
+        font-weight: 500;
+        display: inline-block;
+    }
+}

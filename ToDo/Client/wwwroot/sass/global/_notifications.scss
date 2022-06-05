@@ -1,0 +1,23 @@
+﻿
+.notification-container {
+    width: 100%;
+    margin-top: 62px;
+    padding: .8em 1.5em;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+    &--success {
+        background-color: #77e0b5;
+    }
+
+    &--error {
+        background-color: #eb4d4b;
+    }
+
+    .message-value {
+        text-align: center;
+        font-size: .9rem;
+        color: #ffffff;
+        font-weight: 400;
+    }
+}

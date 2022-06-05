@@ -1,0 +1,224 @@
+﻿@import "../sass-utils/_variables";
+@import "../sass-utils/_mixins";
+
+.user-top-nav {
+    width: 100%;
+    background-color: $primary-color;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 5000;
+
+    .user-top-nav__top-nav-content {
+        width: 95%;
+        margin: 0 auto;
+        padding: 15px 0;
+
+        .top-nav-content__container {
+            width: 100%;
+            display: flex;
+
+            .top-nav-content__container-wrapper {
+                display: flex;
+                width: 50%;
+                align-items: center;
+
+                &--left {
+                    justify-content: flex-start;
+                    margin-right: 1em;
+                }
+
+                &--right {
+                    justify-content: flex-end;
+                    margin-left: 1em;
+                }
+
+                .left-menu-content {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    .left-menu-content__back-to-home-box {
+                        a.back-to-home-box__link-wrapper {
+                            display: inline-block;
+                            text-decoration: none;
+
+                            span {
+                                font-size: 14px;
+                                color: #fff;
+                                font-weight: 400;
+                            }
+                        }
+                    }
+
+                    .left-menu-content__toggle-left-bar-box {
+                        margin-right: .5em;
+                        display: block;
+
+                        .toggle-left-bar-box__click-wrapper, .back-to-home-box__link-wrapper {
+                            cursor: pointer;
+
+                            span, a {
+                                font-size: 14px;
+                                color: #fff;
+                                font-weight: 400;
+                            }
+                        }
+                    }
+                }
+
+                .right-menu-content {
+                    @include flexbox;
+                    @include align-items(center);
+
+                    .logout {
+                        margin-right: 20px;
+                        cursor: pointer;
+                        .option-tag {
+                            font-size: 14px;
+                            color: #fff;
+                            font-weight: 400;
+                        }
+                    }
+
+                    .right-menu-content__username-box {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+
+                        .username-box__user-photo {
+                            width: 2em;
+                            height: 2em;
+                            border-radius: 100%;
+                            background-color: $flat-grey--alpha-04;
+                            margin-right: 10px;
+                        }
+
+                        .username-box__username {
+                            font-size: .9rem;
+                            font-weight: 400;
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.navmenu-container {
+    width: 100%;
+   // position: fixed;
+
+    .navmenu-container__content {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1em 1em 3em 1em;
+        height: 100vh;
+        background-color: #ffffff;
+
+        .navmenu-container__user-menu-wrapper {
+            margin-top: 20px;
+
+            .user-menu-wrapper__left-menu {
+                .left-menu__menu-list {
+                    list-style-type: none;
+
+                    .menu-list__menu-item {
+                        display: block;
+                        margin: 3px 0;
+
+                        .menu-list__item-link {
+                            font-size: .9rem;
+                         //   color: $todolist-black-2-rgba;
+                            padding: 1em 2.7em;
+                            cursor: pointer;
+                            border-radius: 10px;
+                            transition-property: color, background-color;
+                            transition-timing-function: ease;
+                            transition-duration: .3s;
+                            position: relative;
+                            text-decoration: none;
+
+                            &:hover, &:focus {
+                                background-color: rgba(235,242,255, .6);
+                              //  color: $todolist-blue-3-rgba;
+                                transition-property: color, background-color;
+                                transition-timing-function: ease;
+                                transition-duration: .3s;
+                            }
+
+                            &::before {
+                                font-family: 'Font Awesome 5 Free';
+                                font-weight: 600;
+                                position: absolute;
+                                font-size: .75rem;
+                                top: 18px;
+                                left: 14px;
+                            }
+
+                        }
+
+                        .menu-list__item-link.active {
+                            background-color: rgba(235,242,255, 1);
+                          //  color: $todolist-blue-3-rgba;
+                        }
+                    }
+                }
+            }
+
+            .navmenu-container__navmenu-footer {
+                padding: 1em 0;
+                margin-top: 2em;
+
+                .navmenu-footer__project-copyright-box {
+                    .project-copyright-box__copyright {
+                        text-align: center;
+                        font-size: .8rem;
+                        opacity: .9;
+                    }
+
+                    .project-copyright-box__repo-box {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .project-copyright-box__repo-link {
+                            text-decoration: none;
+                            //color: $todolist-blue-3-rgba;
+                            font-size: .9rem;
+                            margin-top: 10px;
+                            text-align: center;
+                            display: inline-block;
+                            margin-left: auto;
+                            margin-right: auto;
+
+                            &:hover, &:focus {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* === */
+
+.todoapp-main-section {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-top: 62px;
+
+    .todoapp-main-section__navmenu-container {
+        width: 20%;
+    }
+
+    .todoapp-main-section__todoapp-content {
+        width: 80%;
+        padding: 25px 0 0 0;
+    }
+}

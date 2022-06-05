@@ -64,4 +64,9 @@ public class IdentityService : IIdentityService
         return new LoginResult();
     }
 
+    public async Task LogoutAsync()
+    {
+        var response = await _httpClient.PostAsync("api/v1/identity/logout", null);
+        await _localStorage.RemoveItemAsync("_auth_token");
+    }
 }

@@ -1,0 +1,19 @@
+﻿@import "../sass-utils/_mixins";
+@import "../sass-utils/_variables";
+
+
+.is-hidden, .hidden {
+    visibility: hidden;
+}
+
+.global-smart-link {
+    color: $primary-color;
+    text-decoration: none;
+    @include transition-property(color);
+    @include transition-duration(.2s);
+    @include transition-timing-function(ease);
+
+    &:hover {
+        color: $primary-color--hover;
+    }
+}

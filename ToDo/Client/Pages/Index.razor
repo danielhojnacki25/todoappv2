@@ -1,19 +1,68 @@
-﻿
-@using ToDo.Data.Models;
-
+﻿@page "/"
+@using System.Globalization
+@using Microsoft.AspNetCore.Components.Authorization
+@using ToDo.Client.Components
+@using ToDo.Common.Dtos.Users
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager _navigationManager
 <PageTitle>List ToDo</PageTitle>
 
-<MudPaper Height="800px" Width="100%">
-    <MudText Typo="Typo.h4">Tik Tak Toe</MudText>
-    <MudContainer MaxWidth="MaxWidth.Small">
-        <MudPaper Height="600px" Width="700px" Square="true" Style="background-color:#90CAF9">
-
-           
-
-        </MudPaper>
-    </MudContainer>
-</MudPaper>
+<CascadingValue Value="this">
+    <CascadingValue Value="MainLayout">
+        <CascadingValue Value="UserDto">
+            <section class="home-user-content-container">
+                <div class="home-user-content-container__home-wrapper">
+                    <div class="home-wrapper__header">
+                        <div class="header__today-date-box">
+                            <h2 class="header__title">Today <span class="date-details">@DateTime.Now.DayOfWeek.ToString() @DateTime.Now.Day.ToString() @DateTime.Now.ToString("MMM", CultureInfo.CreateSpecificCulture("en"))</span></h2>
+                        </div>
+                        <div class="header__page-desc">
+                            <p class="text">Here is a list of the upcoming tasks.</p>
+                        </div>
+                    </div>
+                    <SuccessAlert @ref="_successAlert"></SuccessAlert>
+                    <ErrorAlert @ref="_errorAlert"></ErrorAlert>
+                    <TasksList @ref="_tasksList" UserDto="UserDto"></TasksList>
+                </div>
+            </section>
+        </CascadingValue>
+    </CascadingValue>
+</CascadingValue>
 
 @code {
-   
+    [CascadingParameter]
+    public MainLayout? MainLayout { get; set; }
+    [CascadingParameter]
+    public UserDto UserDto { get; set; }
+    private SuccessAlert? _successAlert;
+    private ErrorAlert? _errorAlert;
+
+    private TasksList _tasksList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is { IsAuthenticated: false })
+        {
+            _navigationManager.NavigateTo("/Identity/Account/Login");
+        }
+    }
+
+    public void ShowSuccessAlert(string message)
+    {
+        _successAlert?.Show(message);
+    }
+
+    public void ShowErrorAlert(string message)
+    {
+        _errorAlert?.Show(message);
+    }
+
+    public void Refresh()
+    {
+        StateHasChanged();
+    }
+
 }

@@ -1,0 +1,103 @@
+﻿@page "/user/register"
+
+@using ToDo.Services.Identities
+@using Microsoft.AspNetCore.Components
+@using ToDo.Common.ViewModels.Identities
+
+@inject IIdentityService _identityService
+@inject NavigationManager _navigationManager
+@inject IStringLocalizer<Register> _localizer
+
+@layout IdentityLayout
+
+<PageTitle></PageTitle>
+
+<CascadingValue Value="this">
+    <CascadingValue Value="IdentityLayout">
+        <div class="authorization-container__inner sign-up-container">
+            <div class="overflow-header">
+                <div class="overflow-header__inner-content">
+                    <div class="auth-cta-container">
+                        <div class="auth-cta-container__inner">
+                            <span class="user-auth-cta">@_localizer["Have an account?"] <a class="smart-btn smart-link" href="/user/login">@_localizer["Sign In now"]</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="authorization-container__content-wrap">
+                <div class="content-wrap__inner-flex">
+                    <div class="inner-flex__wrapper inner-flex__wrapper--right-box">
+                        <div class="authorization__smart-container">
+                            <div class="smart-container__inner-content">
+                                <div class="smart-container__inner-content">
+                                    <div class="smart-container__header-container">
+                                        <div class="title-box">
+                                            <h1 class="title">@_localizer["Welcome in To Do App"]</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="authorization-form">
+                                    <div class="authorization-form__content">
+                                        <EditForm class="authorization-smart-form form" Model="_registerModel" OnValidSubmit="HandleRegistration">
+                                            <DataAnnotationsValidator />
+                                            <div class="form__field">
+                                                <label class="label over-label" for="email">@_localizer["Email address"]</label>
+                                                <InputText type="text" id="email" class="form-control form-data-input" @bind-Value="_registerModel.Email" />
+                                                <ValidationMessage class="text-danger" For="@(() => _registerModel.Email)" />
+                                            </div>
+                                            <div class="form__field">
+                                                <label class="label over-label" for="username">@_localizer["Username"]</label>
+                                                <InputText type="text" id="username" class="form-control form-data-input" @bind-Value="_registerModel.UserName" />
+                                                <ValidationMessage class="text-danger" For="@(() => _registerModel.UserName)" />
+                                            </div>                                            
+                                            <div class="form__field">
+                                                <label class="label over-label" for="username">@_localizer["Password"]</label>
+                                                <InputText type="password" id="password" class="form-control form-data-input" @bind-Value="_registerModel.Password" />
+                                                <ValidationMessage class="text-danger" For="@(() => _registerModel.Password)" />
+                                            </div>
+                                            <div class="form__field form-rule-container">
+                                                <p class="content">
+                                                    @_localizer["By clicking the Create Account button, you accept the"] <a href="/" target="_blank" class="smart-anchor">@_localizer["Terms and Conditions"]</a>.
+                                                </p>
+                                            </div>
+                                            <div class="form__field">
+                                                <div class="cta-box">
+                                                    <button type="submit" class="cta-box__cta-btn cta-box__cta-btn--primary submit-btn">@_localizer["Create Account"]</button>
+                                                </div>
+                                            </div>
+                                        </EditForm>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-footer">
+                <div class="overflow-footer__inner-content">
+                    <div class="footer-boot">
+                        <span class="copyright">&copy; @DateTime.Now.Year Talentee. @_localizer["All rights reserved."]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </CascadingValue>
+</CascadingValue>
+
+@code {
+    [CascadingParameter]
+    private IdentityLayout? IdentityLayout { get; set; }
+
+    private readonly RegisterViewModel _registerModel = new();
+
+    private async Task HandleRegistration()
+    {
+        var result = await _identityService.RegisterAsync(_registerModel);
+
+        if (result is { Successful: true })
+        {
+            var loginResult = await _identityService.LoginAsync(new LoginViewModel { EmailOrUsername = _registerModel.Email, Password = _registerModel.Password });
+            _navigationManager.NavigateTo("/", true);
+        }
+    }
+}

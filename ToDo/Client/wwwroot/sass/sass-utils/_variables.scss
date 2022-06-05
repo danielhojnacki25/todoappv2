@@ -1,0 +1,41 @@
+﻿$error-color--text: #f03a63;
+$error-color--bckg: #faebf0;
+
+$success-color--text: #33cccc;
+$success-color--bckg: #f4ffff;
+
+$font-primary-color: rgba(0,0,0,1);
+$font-primary-color--alpha-09: rgba(0,0,0,.9);
+$font-primary-color--alpha-08: rgba(0,0,0,.8);
+$font-primary-color--alpha-05: rgba(0,0,0,.5);
+
+$font-secondary-color: rgba(10, 35, 77, 1);
+
+$primary-color: rgba(84, 101, 255, 1);
+$primary-color--alpha-09: rgba(84, 101, 255, .9);
+$primary-color--alpha-08: rgba(84, 101, 255, .8);
+$primary-color--alpha-07: rgba(84, 101, 255, .7);
+$primary-color--alpha-06: rgba(84, 101, 255, .6);
+$primary-color--alpha-05: rgba(84, 101, 255, .5);
+$primary-color--alpha-04: rgba(84, 101, 255, .4);
+$primary-color--alpha-03: rgba(84, 101, 255, .3);
+$primary-color--alpha-02: rgba(84, 101, 255, .2);
+$primary-color--alpha-01: rgba(84, 101, 255, .1);
+$primary-color--alpha-005: rgba(84, 101, 255, .05);
+$primary-color--hover: rgba(80, 96, 242, 1);
+
+$flat-grey: rgba(204, 210, 222, 1);
+$flat-grey--alpha-09: rgba(204, 210, 222, .9);
+$flat-grey--alpha-08: rgba(204, 210, 222, .8);
+$flat-grey--alpha-07: rgba(204, 210, 222, .7);
+$flat-grey--alpha-06: rgba(204, 210, 222, .6);
+$flat-grey--alpha-05: rgba(204, 210, 222, .5);
+$flat-grey--alpha-04: rgba(204, 210, 222, .4);
+$flat-grey--alpha-03: rgba(204, 210, 222, .3);
+$flat-grey--alpha-02: rgba(204, 210, 222, .2);
+$flat-grey--alpha-01: rgba(204, 210, 222, .1);
+
+$smooth-bezier: cubic-bezier(0,1.18,.89,1);
+
+$app-like-color: rgba(239, 71, 111, 1);
+$app-comment-color: $primary-color;
